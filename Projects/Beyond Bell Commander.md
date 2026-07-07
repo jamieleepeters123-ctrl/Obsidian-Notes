@@ -2,44 +2,61 @@
 
 Productised school PA + bell scheduling system under the BNS brand.
 
-## Architecture (current — Jul 2026)
-- **Brain & face:** Pi 5 + 7" touch display — Node-RED scheduling engine, Schoolyard web UI (kiosk + any staff browser), GPIO EVAC contact input, phone-home client. Commissioning via web UI.
-- **Audio:** Allen & Heath AHM-16 — internal WAV bell player (bells stored on the unit), matrix routing, priority ducking for paging. Triggered over documented TCP :51325 (ahm_player.py work ports straight in).
-- **Distribution:** Dante I/O card in the AHM → decentralised Dante amps per block → local 100V speakers. One network drop per block; a block failure silences only that block.
-- **Network:** Netgear M4250 (Dante AV VLAN, IGMP, PTP QoS).
-- **No Sound Node** — AHM internal player removed the need. AHM-16 is the product floor.
-- **Crestron:** not in the prototype. If a tender demands it, a CP4 slots in above the Node-RED engine as I/O + badge. Identity = BNS appliance.
-- **EVAC:** FIP dry contact (N/C) → Pi GPIO → holds all bells. Supplementary only — certified EWIS (AS 1670.4) always independent.
+## Architecture v2 (locked — Jul 2026)
+Designed from scratch for maintainability and stability. Three lines:
+**Headless Linux appliance (engine) → TCP :51325 → AHM (playback + Dante routing) → per-block amps.** Any browser is the face.
+
+### Head end
+- Headless Pi / Linux appliance in the rack beside the AHM. No attached display — a dead screen is cosmetic, never a bells fault. Easy swap via golden image + site config.
+- **One Python service**: scheduler, AHM driver, EVAC GPIO, phone-home client, serves the UI. FastAPI + SQLite (WAL). Deliberately boring, few pinned dependencies.
+- **Scheduler = compiled tick loop, not a framework.** Daily (and on config change) the engine compiles the day's plan into a flat list ("ring bell X to group Y at 11:00:00"); a 1-second tick executes it. ~100 readable lines, exhaustively unit-tested: every 2026 date, every override, DST. "Did we break bells?" is a CI answer.
+- **Fake AHM** test server (speaks the documented protocol) — full schedule→driver→DSP path exercised on every commit, no hardware. Field bugs reproduced + pinned as regression tests.
+- Stability layers: Pi hardware watchdog → systemd → app self-check; read-only rootfs; no auto-updates (deliberate tested release images); chrony; fully functional with zero internet (telemetry queues locally).
+- Config = one schema-validated JSON. Code / config / data never mix. Reflash + config.json = site restored.
+
+### Displays (fully decoupled — all just browsers on the appliance URL)
+- Office PC / iPad — zero cost
+- ELC SMT101 10.1" Android wall panel (Fully Kiosk) — the 10" upgrade AND the Android-tablet option in one SKU (see [[ELC Smart Panels]])
+- Pi + 7"/10" touch all-in-one where a single-box look is wanted (PiFace kiosk pattern)
+
+### Audio
+- **AHM-16** (product floor): internal WAV bell player (~2.5 GB storage), matrix, priority ducking. Driver = documented TCP :51325 (ahm_player.py groundwork).
+- **Dante I/O card** → decentralised Dante amps per block → local 100V speakers. One network drop per block; block failure silences only that block. Netgear M4250 (IGMP, PTP QoS).
+- **Music bells** (schools change songs each term, self-service): Audinate AVIO USB on the appliance puts it on Dante as a source. Staff upload MP3 in UI → ffmpeg normalise/trim/fade → assign to any bell. Engine health-checks the path and falls back to AHM stored tone automatically. (Music licensing = school's responsibility; APRA AMCOS education licences generally cover NSW schools.)
+- **Fallback bells**: AHM **Manage > Events** scheduler (50 events/config, NTP-synced, Track Playback event type) holds a dormant mirror of the core timetable. Activation via labelled SoftKey or remotely. Bells survive appliance failure with no extra hardware. *(Algo 8301 removed from plan — AHM Events does its job for free.)*
+- No file upload to AHM over documented TCP — uploads ride AH-Net (System Manager). Product answer: fixed sound-slot bank loaded at commissioning + UI remaps slots; true uploads = remote System Manager support task. Music bells cover the "custom audio" demand anyway.
+
+### Safety
+- FIP dry contact (N/C) → appliance GPIO → holds all bells. Supplementary only — certified EWIS (AS 1670.4) always independent and untouched.
+- EVAC events logged forever (see [[Bell Commander Telemetry]]).
+
+### Remote management (decided)
+- Outbound-HTTPS phone-home → office-hosted Docker portal (fixed IP; confirm contractually static). External uptime watchdog + UPS non-negotiable. VPS migration = DNS change.
+- Remote access: 4G out-of-band gateway w/ Tailscale on rack side; school-network Tailscale only with written IT approval.
+
+### Languages
+- **Python** everywhere on the backend (appliance service + portal, one monorepo, shared models) — matches existing BNS tooling (Flask, ReportLab, ffmpeg, ahm_player.py).
+- **React** UI (Schoolyard), built to static files, vendored per release — no build tooling on the Pi.
+- Node-RED = bench/prototyping tool only, never in the shipped image.
 
 ## UI
-- Direction locked: **Schoolyard** — blazer green + bell brass on warm paper, plain language ("Ring the bell", "held", "skipped"), tactile buttons. Full working React demo built (dashboard w/ live countdown + chalkboard timeline, year calendar w/ NSW terms, zones, log, 5-step setup wizard).
+- Direction locked: **Schoolyard** — blazer green + bell brass on warm paper, plain language ("Ring the bell", "held", "skipped"), tactile buttons. Working React demo: [[Bell Commander Demo UI]].
 
-## Remote management (decided)
-- Phone-home over outbound HTTPS to office-hosted Docker portal (fixed IP — confirm contractually static). External uptime watchdog + UPS non-negotiable. VPS migration = DNS change.
-- Remote access: 4G out-of-band gateway w/ Tailscale on rack side (school-network Tailscale only with written IT approval). Dropped from prototype diagram for now.
-- Telemetry spec: [[Bell Commander Telemetry]]
-
-## Prototype (next build)
-Pi 5 + 7" display · AHM-16 + Dante card · one Dante amp as stand-in block · M4250 · GPIO EVAC via optocoupler on bench.
-- Keep scheduler logic in structured function node / sidecar service — flows only for drivers + orchestration
-- One persistent AHM TCP session with heartbeat/reconnect
-- Bench-verify: AHM WAV storage limits (files live in config — test backup/restore loaded), and direct playback-channel trigger vs preset-recall workaround (RX inspector on System Manager)
+## Bench checklist (prototype)
+- Pi 5 · AHM-16 + Dante card · one Dante amp · M4250 · GPIO EVAC via optocoupler
+- AHM: set **static IP** (currently 192.168.1.168 on the bench after a DHCP move — pin it; commissioning checklist item: "AHM IP fixed + recorded in site config")
+- Verify: WAV storage/backup-restore with sounds loaded · direct playback-channel trigger over TCP · Events fallback end-to-end (Manage > Events, Track Playback) · whether Events are writable over AH-Net (capture System Manager while creating one) · AVIO music path + auto-fallback
+- Keep one persistent AHM TCP session with heartbeat/reconnect
 
 ## Docs produced
-- Product Plan v0.1 (14+ open decisions flagged; §6.1 remote mgmt decided)
-- Hardware options list (12 categories, tier snapshot)
-- Signal flow SVGs (analogue + Dante versions, Schoolyard-styled)
-- UI direction comparison sheet (4 options → Schoolyard chosen)
+- Product Plan v0.1 (Algo removed; §6.1 remote mgmt decided) · Hardware options list · Signal flow SVGs (analogue + Dante) · UI comparison sheet → Schoolyard
 
 ## Status
-- Demo UI complete (Schoolyard skin)
+- Demo UI complete (Schoolyard) — [[Bell Commander Demo UI]]
 - Bell scheduler fetches real bell times (see [[Campbelltown PS]]) and [[NSW 2026 Term Dates]]
-- Evac audio produced for Campbelltown PS (offsite version done, onsite pending voice file)
+- Evac audio produced for Campbelltown PS (offsite done, onsite pending voice file)
 
 ## Related
-- [[Bell Commander Telemetry]]
-- [[Strobe Beacon Spec]] — visual alerting companion
-- [[AHM Reverse Engineering]] — protocol groundwork the driver reuses
-- [[Campbelltown PS]]
+- [[Bell Commander Telemetry]] · [[Bell Commander Demo UI]] · [[AHM Reverse Engineering]] · [[Strobe Beacon Spec]] · [[Campbelltown PS]] · [[ELC Smart Panels]]
 
 #bns #project/bell-commander
