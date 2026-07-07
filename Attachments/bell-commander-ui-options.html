@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bell Commander — UI Direction Options</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Nunito:wght@600;700;800&family=Oswald:wght@400;500;600&family=Archivo:wght@400;500;600;700&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#E7E9EE;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;color:#1D1D1F;padding:24px 14px 80px;}
+.sheet{max-width:760px;margin:0 auto;}
+.sheet>h1{font-size:22px;letter-spacing:-.02em;margin-bottom:4px;}
+.sheet>p{color:#6E6E73;font-size:13.5px;margin-bottom:28px;}
+.opt{margin-bottom:44px;}
+.opt-head{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;flex-wrap:wrap;}
+.opt-head .tag{font-size:11px;font-weight:700;letter-spacing:.1em;background:#1D1D1F;color:#fff;padding:4px 10px;border-radius:6px;}
+.opt-head h2{font-size:17px;letter-spacing:-.01em;}
+.opt>p{color:#6E6E73;font-size:12.5px;margin-bottom:12px;max-width:640px;line-height:1.5;}
+.mock{border-radius:16px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.1),0 16px 40px rgba(0,0,0,.12);}
+
+/* ═══════════ OPTION A · CUPERTINO ═══════════ */
+.a{background:#F5F5F7;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',sans-serif;padding-bottom:22px;}
+.a-hdr{display:flex;align-items:center;gap:11px;padding:13px 18px;background:rgba(255,255,255,.8);border-bottom:1px solid rgba(0,0,0,.07);}
+.a-mark{width:34px;height:34px;border-radius:8.5px;background:linear-gradient(160deg,#FFC94D,#FF9500);display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 1px 3px rgba(255,149,0,.4);}
+.a-hdr b{font-size:15px;letter-spacing:-.02em;}
+.a-hdr b span{font-weight:400;color:#6E6E73;}
+.a-hdr .clk{margin-left:auto;font-weight:600;font-variant-numeric:tabular-nums;}
+.a-seg{display:flex;justify-content:center;padding:12px 0 4px;}
+.a-seg div{display:inline-flex;background:#E8E8ED;border-radius:11px;padding:3px;gap:2px;font-size:12.5px;font-weight:500;}
+.a-seg span{padding:6px 15px;border-radius:8px;color:#1D1D1F;}
+.a-seg span.on{background:#fff;font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,.12);}
+.a-body{padding:14px 16px 0;display:grid;gap:12px;}
+.a-card{background:#fff;border-radius:16px;padding:16px;box-shadow:0 1px 2px rgba(0,0,0,.05),0 8px 22px rgba(0,0,0,.04);}
+.a-eyebrow{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#6E6E73;margin-bottom:10px;}
+.a-next{display:flex;align-items:center;gap:16px;}
+.a-ring{width:74px;height:74px;border-radius:50%;background:#F5F5F7;border:3px solid #FF9500;box-shadow:0 0 0 5px rgba(255,149,0,.14);display:flex;align-items:center;justify-content:center;font-size:27px;flex:none;}
+.a-count{font-size:33px;font-weight:700;letter-spacing:-.03em;color:#FF9500;line-height:1;font-variant-numeric:tabular-nums;}
+.a-lab{font-size:14px;font-weight:600;margin-top:4px;}
+.a-meta{font-size:12px;color:#6E6E73;}
+.a-btns{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.a-btn{padding:8px 16px;border-radius:980px;font-size:13px;font-weight:500;background:#E8E8ED;}
+.a-btn.p{background:#0071E3;color:#fff;}
+.a-btn.d{background:rgba(255,59,48,.1);color:#FF3B30;}
+.a-tape{position:relative;height:64px;background:#F5F5F7;border-radius:12px;margin-top:2px;}
+.a-pin{position:absolute;top:22px;width:11px;height:11px;border-radius:50%;background:#FF9500;border:2.5px solid #fff;box-shadow:0 1px 4px rgba(255,149,0,.5);}
+.a-pin.done{background:#D2D2D7;box-shadow:none;}
+.a-pt{position:absolute;top:40px;font-size:9.5px;font-weight:600;color:#6E6E73;transform:translateX(-40%);}
+.a-now{position:absolute;top:6px;bottom:6px;width:2px;border-radius:2px;background:#FF9500;}
+.a-now::after{content:'Now';position:absolute;left:5px;top:-2px;font-size:9px;font-weight:600;color:#FF9500;}
+
+/* ═══════════ OPTION B · RACK ROOM ═══════════ */
+.b{background:#0D1220;color:#E9EDF5;font-family:'IBM Plex Sans',sans-serif;padding-bottom:22px;
+   background-image:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(217,164,65,.06),transparent);}
+.b-hdr{display:flex;align-items:center;gap:11px;padding:13px 18px;border-bottom:1px solid rgba(140,151,173,.16);}
+.b-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(145deg,#F0C060,#8A6620);display:flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 2px 10px rgba(217,164,65,.35);}
+.b-hdr b{font-size:13.5px;letter-spacing:.06em;}
+.b-hdr b em{font-style:normal;color:#D9A441;}
+.b-hdr small{display:block;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#8C97AD;font-weight:400;}
+.b-hdr .clk{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:14px;}
+.b-nav{display:flex;gap:2px;padding:0 12px;border-bottom:1px solid rgba(140,151,173,.16);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;}
+.b-nav span{padding:11px 13px 9px;color:#8C97AD;border-bottom:2px solid transparent;}
+.b-nav span.on{color:#F0C060;border-bottom-color:#D9A441;}
+.b-body{padding:14px 16px 0;display:grid;gap:12px;}
+.b-card{background:#151C2B;border:1px solid rgba(140,151,173,.16);border-radius:13px;padding:16px;}
+.b-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:#D9A441;margin-bottom:10px;}
+.b-next{display:flex;align-items:center;gap:16px;}
+.b-ring{width:74px;height:74px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-size:27px;
+  background:radial-gradient(circle at 35% 30%,#2A3550,#1B2436);border:2px solid #F0C060;box-shadow:0 0 16px rgba(240,192,96,.4);}
+.b-count{font-family:'IBM Plex Mono',monospace;font-size:30px;font-weight:600;color:#F0C060;line-height:1;}
+.b-lab{font-size:13.5px;font-weight:600;margin-top:5px;}
+.b-meta{font-size:11.5px;color:#8C97AD;}
+.b-btns{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.b-btn{padding:8px 14px;border-radius:8px;font-size:12px;font-weight:600;border:1px solid rgba(140,151,173,.28);background:#1B2436;color:#E9EDF5;}
+.b-btn.p{background:linear-gradient(145deg,#F0C060,#D9A441);color:#241A05;border-color:#F0C060;}
+.b-btn.d{border-color:#E4524D;color:#E4524D;background:transparent;}
+.b-tape{position:relative;height:64px;background:linear-gradient(#1B2436,#151C2B);border:1px solid rgba(140,151,173,.28);border-radius:9px;margin-top:2px;}
+.b-pin{position:absolute;top:22px;width:10px;height:10px;border-radius:50%;background:#D9A441;border:2px solid #0D1220;box-shadow:0 0 8px rgba(217,164,65,.5);}
+.b-pin.done{background:#5E6980;box-shadow:none;}
+.b-pt{position:absolute;top:38px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:#8C97AD;transform:translateX(-40%);}
+.b-now{position:absolute;top:0;bottom:0;width:2px;background:#F0C060;box-shadow:0 0 10px rgba(240,192,96,.7);}
+.b-now::after{content:'NOW';position:absolute;left:5px;top:2px;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.15em;color:#F0C060;}
+
+/* ═══════════ OPTION C · SCHOOLYARD ═══════════ */
+.c{background:#FBF8F1;color:#22322A;font-family:'Nunito',sans-serif;padding-bottom:22px;}
+.c-hdr{display:flex;align-items:center;gap:12px;padding:15px 18px;background:#1E4D3B;color:#FBF8F1;}
+.c-mark{width:36px;height:36px;border-radius:50%;background:#F2B33D;color:#1E4D3B;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 2px 0 rgba(0,0,0,.18);}
+.c-hdr b{font-size:16px;font-weight:800;letter-spacing:-.01em;}
+.c-hdr small{display:block;font-size:10.5px;font-weight:600;opacity:.75;}
+.c-hdr .clk{margin-left:auto;font-weight:800;font-size:16px;background:rgba(255,255,255,.14);padding:6px 14px;border-radius:999px;font-variant-numeric:tabular-nums;}
+.c-nav{display:flex;gap:8px;padding:12px 16px 2px;font-size:12.5px;font-weight:700;flex-wrap:wrap;}
+.c-nav span{padding:7px 15px;border-radius:999px;color:#5B6B60;background:#F0EBDF;}
+.c-nav span.on{background:#1E4D3B;color:#FBF8F1;}
+.c-body{padding:12px 16px 0;display:grid;gap:12px;}
+.c-card{background:#fff;border:2px solid #E7DFCC;border-radius:20px;padding:17px;box-shadow:0 3px 0 #E7DFCC;}
+.c-eyebrow{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#B08A2E;margin-bottom:10px;}
+.c-next{display:flex;align-items:center;gap:16px;}
+.c-ring{width:78px;height:78px;border-radius:50%;flex:none;background:#FDF3DC;border:3px solid #F2B33D;display:flex;align-items:center;justify-content:center;font-size:29px;box-shadow:0 3px 0 #E3C77F;}
+.c-count{font-size:34px;font-weight:800;color:#1E4D3B;line-height:1;font-variant-numeric:tabular-nums;}
+.c-lab{font-size:14.5px;font-weight:800;margin-top:4px;}
+.c-meta{font-size:12px;color:#5B6B60;font-weight:600;}
+.c-btns{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;}
+.c-btn{padding:9px 17px;border-radius:999px;font-size:13px;font-weight:800;background:#F0EBDF;color:#22322A;box-shadow:0 2px 0 #DCD4C0;}
+.c-btn.p{background:#F2B33D;color:#3A2C08;box-shadow:0 2px 0 #C68F26;}
+.c-btn.d{background:#FCE8E6;color:#C0392B;box-shadow:0 2px 0 #E8C4C0;}
+.c-tape{position:relative;height:66px;background:#1E4D3B;border-radius:14px;margin-top:2px;}
+.c-pin{position:absolute;top:22px;width:12px;height:12px;border-radius:50%;background:#F2B33D;border:2.5px solid #1E4D3B;box-shadow:0 0 0 2px rgba(242,179,61,.35);}
+.c-pin.done{background:#5F7A6D;box-shadow:none;}
+.c-pt{position:absolute;top:40px;font-size:9.5px;font-weight:800;color:#BCCFC2;transform:translateX(-40%);}
+.c-now{position:absolute;top:7px;bottom:7px;width:3px;border-radius:3px;background:#F2B33D;}
+.c-now::after{content:'now';position:absolute;left:6px;top:-2px;font-size:9.5px;font-weight:800;color:#F2B33D;}
+
+/* ═══════════ OPTION D · DEPARTURE BOARD ═══════════ */
+.d{background:#FFFFFF;color:#111;font-family:'Archivo',sans-serif;padding-bottom:22px;border-top:6px solid #111;}
+.d-hdr{display:flex;align-items:baseline;gap:12px;padding:15px 18px 12px;border-bottom:2px solid #111;flex-wrap:wrap;}
+.d-hdr b{font-family:'Oswald',sans-serif;font-size:19px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;}
+.d-hdr small{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#888;font-weight:500;}
+.d-hdr .clk{margin-left:auto;font-family:'Oswald',sans-serif;font-size:19px;font-weight:600;font-variant-numeric:tabular-nums;background:#111;color:#fff;padding:2px 12px;}
+.d-nav{display:flex;padding:0 18px;border-bottom:1px solid #111;font-family:'Oswald',sans-serif;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;overflow-x:auto;}
+.d-nav span{padding:10px 14px 9px;color:#999;white-space:nowrap;}
+.d-nav span.on{color:#111;box-shadow:inset 0 -3px 0 #E03A2F;}
+.d-body{padding:16px 18px 0;}
+.d-next{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;border-bottom:1px solid #ddd;padding-bottom:14px;}
+.d-count{font-family:'Oswald',sans-serif;font-size:56px;font-weight:600;line-height:.95;letter-spacing:.01em;font-variant-numeric:tabular-nums;}
+.d-count i{font-style:normal;color:#E03A2F;}
+.d-nextinfo b{display:block;font-family:'Oswald',sans-serif;font-size:15px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
+.d-nextinfo span{font-size:11.5px;color:#888;letter-spacing:.06em;text-transform:uppercase;}
+.d-rows{margin-top:4px;}
+.d-row{display:flex;gap:14px;align-items:baseline;padding:9px 2px;border-bottom:1px solid #eee;font-size:13px;}
+.d-row .t{font-family:'Oswald',sans-serif;font-weight:600;font-size:14.5px;width:52px;flex:none;font-variant-numeric:tabular-nums;}
+.d-row.done{color:#bbb;}
+.d-row.done .t{color:#bbb;text-decoration:line-through;}
+.d-row .g{margin-left:auto;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#888;}
+.d-row.next .t{color:#E03A2F;}
+.d-row.next{font-weight:600;}
+.d-btns{display:flex;gap:0;margin-top:16px;border:2px solid #111;width:fit-content;max-width:100%;flex-wrap:wrap;}
+.d-btn{padding:10px 18px;font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border-right:2px solid #111;}
+.d-btn:last-child{border-right:none;}
+.d-btn.p{background:#111;color:#fff;}
+.d-btn.d{color:#E03A2F;}
+
+.note{margin-top:36px;background:#fff;border-radius:14px;padding:18px;font-size:13px;color:#444;line-height:1.6;box-shadow:0 1px 3px rgba(0,0,0,.08);}
+.note b{color:#111;}
+</style>
+</head>
+<body>
+<div class="sheet">
+<h1>Bell Commander — four UI directions</h1>
+<p>Same dashboard content in each. Static mockups for comparison only.</p>
+
+<!-- ═══ A ═══ -->
+<div class="opt">
+  <div class="opt-head"><span class="tag">A</span><h2>Cupertino</h2></div>
+  <p>The current build. Apple design language: light surfaces, frosted chrome, SF type, iOS controls, orange as the bell colour. Friendliest to office staff on iPads.</p>
+  <div class="mock a">
+    <div class="a-hdr"><div class="a-mark">🔔</div><b>Bell Commander <span>· Beyond</span></b><span class="clk">10:58:12 am</span></div>
+    <div class="a-seg"><div><span class="on">Dashboard</span><span>Calendar</span><span>Zones</span><span>Setup</span></div></div>
+    <div class="a-body">
+      <div class="a-card">
+        <div class="a-eyebrow">Next bell</div>
+        <div class="a-next">
+          <div class="a-ring">🔔</div>
+          <div><div class="a-count">01:48</div><div class="a-lab">Recess · 11:00</div><div class="a-meta">School bell → All Call</div></div>
+        </div>
+        <div class="a-btns"><span class="a-btn p">Ring Bell Now</span><span class="a-btn">Skip Next Bell</span><span class="a-btn d">Fire Trip</span></div>
+      </div>
+      <div class="a-card">
+        <div class="a-eyebrow">Today · Normal Day</div>
+        <div class="a-tape">
+          <div class="a-pin done" style="left:6%"></div><span class="a-pt" style="left:6%">8:55</span>
+          <div class="a-pin done" style="left:12%"></div><span class="a-pt" style="left:12%">9:00</span>
+          <div class="a-pin" style="left:36%"></div><span class="a-pt" style="left:36%">11:00</span>
+          <div class="a-pin" style="left:42%"></div><span class="a-pt" style="left:42%">11:20</span>
+          <div class="a-pin" style="left:66%"></div><span class="a-pt" style="left:66%">1:10</span>
+          <div class="a-pin" style="left:92%"></div><span class="a-pt" style="left:92%">3:00</span>
+          <div class="a-now" style="left:34%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ B ═══ -->
+<div class="opt">
+  <div class="opt-head"><span class="tag">B</span><h2>Rack Room</h2></div>
+  <p>Pro-AV console: deep slate, bell-brass accents, mono numerals, glowing status. Reads as serious integrator gear — strongest on a wall-mounted touchpanel, most at home next to Q-SYS.</p>
+  <div class="mock b">
+    <div class="b-hdr"><div class="b-mark">🔔</div><b>BEYOND <em>BELL COMMANDER</em><small>Beyond Network Solutions</small></b><span class="clk">10:58:12</span></div>
+    <div class="b-nav"><span class="on">Dashboard</span><span>Calendar</span><span>Zones</span><span>Setup</span></div>
+    <div class="b-body">
+      <div class="b-card">
+        <div class="b-eyebrow">Next bell</div>
+        <div class="b-next">
+          <div class="b-ring">🔔</div>
+          <div><div class="b-count">01:48</div><div class="b-lab">Recess · 11:00</div><div class="b-meta">School bell → All Call</div></div>
+        </div>
+        <div class="b-btns"><span class="b-btn p">▶ Ring now</span><span class="b-btn">Skip next</span><span class="b-btn d">EVAC test</span></div>
+      </div>
+      <div class="b-card">
+        <div class="b-eyebrow">Today · Normal Day</div>
+        <div class="b-tape">
+          <div class="b-pin done" style="left:6%"></div><span class="b-pt" style="left:6%">08:55</span>
+          <div class="b-pin done" style="left:12%"></div><span class="b-pt" style="left:12%">09:00</span>
+          <div class="b-pin" style="left:36%"></div><span class="b-pt" style="left:36%">11:00</span>
+          <div class="b-pin" style="left:42%"></div><span class="b-pt" style="left:42%">11:20</span>
+          <div class="b-pin" style="left:66%"></div><span class="b-pt" style="left:66%">13:10</span>
+          <div class="b-pin" style="left:92%"></div><span class="b-pt" style="left:92%">15:00</span>
+          <div class="b-now" style="left:34%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ C ═══ -->
+<div class="opt">
+  <div class="opt-head"><span class="tag">C</span><h2>Schoolyard</h2></div>
+  <p>Designed for the school, not the rack: blazer green and bell brass on warm paper, rounded type, soft tactile buttons. Feels like it belongs in a front office — the least intimidating for non-technical staff.</p>
+  <div class="mock c">
+    <div class="c-hdr"><div class="c-mark">🔔</div><b>Bell Commander<small>Campbelltown Public School</small></b><span class="clk">10:58 am</span></div>
+    <div class="c-nav"><span class="on">Today</span><span>Calendar</span><span>Zones</span><span>Setup</span></div>
+    <div class="c-body">
+      <div class="c-card">
+        <div class="c-eyebrow">Next bell</div>
+        <div class="c-next">
+          <div class="c-ring">🔔</div>
+          <div><div class="c-count">1 min 48</div><div class="c-lab">Recess · 11:00 am</div><div class="c-meta">School bell, everywhere</div></div>
+        </div>
+        <div class="c-btns"><span class="c-btn p">Ring the bell</span><span class="c-btn">Skip next</span><span class="c-btn d">Emergency</span></div>
+      </div>
+      <div class="c-card">
+        <div class="c-eyebrow">Today's bells</div>
+        <div class="c-tape">
+          <div class="c-pin done" style="left:6%"></div><span class="c-pt" style="left:6%">8:55</span>
+          <div class="c-pin done" style="left:12%"></div><span class="c-pt" style="left:12%">9:00</span>
+          <div class="c-pin" style="left:36%"></div><span class="c-pt" style="left:36%">11:00</span>
+          <div class="c-pin" style="left:42%"></div><span class="c-pt" style="left:42%">11:20</span>
+          <div class="c-pin" style="left:66%"></div><span class="c-pt" style="left:66%">1:10</span>
+          <div class="c-pin" style="left:92%"></div><span class="c-pt" style="left:92%">3:00</span>
+          <div class="c-now" style="left:34%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ D ═══ -->
+<div class="opt">
+  <div class="opt-head"><span class="tag">D</span><h2>Departure Board</h2></div>
+  <p>The school day as a printed timetable / station board: white, ink black, one signal red, condensed caps, rung bells struck through. Maximum clarity per pixel — ages well, prints well, zero decoration.</p>
+  <div class="mock d">
+    <div class="d-hdr"><b>Bell Commander</b><small>Beyond Network Solutions</small><span class="clk">10:58</span></div>
+    <div class="d-nav"><span class="on">Today</span><span>Calendar</span><span>Zones</span><span>Setup</span></div>
+    <div class="d-body">
+      <div class="d-next">
+        <div class="d-count"><i>01:48</i></div>
+        <div class="d-nextinfo"><b>Recess — 11:00</b><span>School bell → All Call</span></div>
+      </div>
+      <div class="d-rows">
+        <div class="d-row done"><span class="t">08:55</span>Warning bell<span class="g">All call</span></div>
+        <div class="d-row done"><span class="t">09:00</span>Classes begin<span class="g">All call</span></div>
+        <div class="d-row next"><span class="t">11:00</span>Recess<span class="g">All call</span></div>
+        <div class="d-row"><span class="t">11:20</span>End of recess<span class="g">Play + class</span></div>
+        <div class="d-row"><span class="t">13:10</span>Lunch<span class="g">All call</span></div>
+        <div class="d-row"><span class="t">15:00</span>Dismissal<span class="g">All call</span></div>
+      </div>
+      <div class="d-btns"><span class="d-btn p">Ring now</span><span class="d-btn">Skip next</span><span class="d-btn d">Evac</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="note">
+<b>How to choose:</b> A and C optimise for the daily user (office staff); B optimises for the integrator and the wall panel; D optimises for glanceability and longevity. They can also mix — e.g. C's warmth with D's departure-board bell list, or A's chrome with B's dark mode as a toggle. Pick a primary and note anything to steal from the others.
+</div>
+</div>
+</body>
+</html>

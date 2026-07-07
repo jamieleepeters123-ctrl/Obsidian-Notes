@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 660" font-family="Nunito, -apple-system, 'Segoe UI', sans-serif">
+  <defs>
+    <marker id="arrG" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M1,1 L8,4.5 L1,8 Z" fill="#1E4D3B"/>
+    </marker>
+    <marker id="arrB" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M1,1 L8,4.5 L1,8 Z" fill="#C68F26"/>
+    </marker>
+    <marker id="arrR" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M1,1 L8,4.5 L1,8 Z" fill="#C0392B"/>
+    </marker>
+    <marker id="arrN" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M1,1 L8,4.5 L1,8 Z" fill="#9AA69D"/>
+    </marker>
+  </defs>
+
+  <rect width="1100" height="660" fill="#FBF8F1"/>
+
+  <!-- title -->
+  <circle cx="58" cy="44" r="20" fill="#F2B33D"/>
+  <text x="58" y="51" text-anchor="middle" font-size="19">🔔</text>
+  <text x="92" y="40" font-size="20" font-weight="800" fill="#1E4D3B">Beyond Bell Commander — Dante Signal Flow</text>
+  <text x="92" y="60" font-size="12" font-weight="700" fill="#5B6B60">Pi 5 controller · AHM-16 + Dante card · decentralised Dante amps per block</text>
+
+  <!-- ══ PI CONTROLLER ══ -->
+  <rect x="60" y="90" width="240" height="160" rx="16" fill="#1E4D3B"/>
+  <text x="180" y="117" text-anchor="middle" font-size="13.5" font-weight="800" fill="#FBF8F1">BNS Controller</text>
+  <text x="180" y="134" text-anchor="middle" font-size="11" font-weight="700" fill="#BCCFC2">Pi 5 + 7&quot; touch display</text>
+  <line x1="82" y1="145" x2="278" y2="145" stroke="#3A6B55" stroke-width="1.5"/>
+  <text x="180" y="165" text-anchor="middle" font-size="10.5" font-weight="700" fill="#F2B33D">Node-RED scheduling engine</text>
+  <text x="180" y="183" text-anchor="middle" font-size="10.5" font-weight="600" fill="#DCE9E0">Schoolyard UI (kiosk + web)</text>
+  <text x="180" y="201" text-anchor="middle" font-size="10.5" font-weight="600" fill="#DCE9E0">AHM driver · phone-home client</text>
+  <text x="180" y="219" text-anchor="middle" font-size="10.5" font-weight="600" fill="#DCE9E0">GPIO: EVAC contact input</text>
+  <text x="180" y="238" text-anchor="middle" font-size="9.5" font-weight="700" fill="#7FA391">Commissioning via web UI</text>
+
+  <!-- ══ AHM-16 ══ -->
+  <rect x="400" y="90" width="220" height="160" rx="16" fill="#FFFFFF" stroke="#E7DFCC" stroke-width="2"/>
+  <text x="510" y="115" text-anchor="middle" font-size="13.5" font-weight="800" fill="#22322A">Allen &amp; Heath AHM-16</text>
+  <line x1="422" y1="127" x2="598" y2="127" stroke="#F0EBDF" stroke-width="1.5"/>
+  <text x="510" y="147" text-anchor="middle" font-size="10.5" font-weight="700" fill="#C68F26">Internal WAV bell player</text>
+  <text x="510" y="165" text-anchor="middle" font-size="10.5" font-weight="700" fill="#C68F26">Dante I/O card — network audio hub</text>
+  <text x="510" y="183" text-anchor="middle" font-size="10.5" font-weight="600" fill="#5B6B60">Matrix routing · priority ducking</text>
+  <text x="510" y="201" text-anchor="middle" font-size="10.5" font-weight="600" fill="#5B6B60">Zone EQ · delay · limiters</text>
+  <text x="510" y="222" text-anchor="middle" font-size="10.5" font-weight="600" fill="#5B6B60">Bell sounds stored on the unit</text>
+
+  <!-- ══ PAGING MIC ══ -->
+  <rect x="700" y="95" width="180" height="56" rx="14" fill="#FFFFFF" stroke="#E7DFCC" stroke-width="2"/>
+  <text x="790" y="118" text-anchor="middle" font-size="12.5" font-weight="800" fill="#22322A">Paging mic</text>
+  <text x="790" y="136" text-anchor="middle" font-size="10.5" font-weight="600" fill="#5B6B60">front office</text>
+  <line x1="700" y1="123" x2="626" y2="123" stroke="#C68F26" stroke-width="3" stroke-linecap="round" marker-end="url(#arrB)"/>
+  <text x="790" y="170" text-anchor="middle" font-size="9.5" font-weight="700" fill="#C68F26">priority in — ducks bells</text>
+
+  <!-- ══ FIP ══ -->
+  <rect x="60" y="330" width="180" height="72" rx="14" fill="#FCE8E6" stroke="#E8C4C0" stroke-width="2"/>
+  <text x="150" y="358" text-anchor="middle" font-size="12.5" font-weight="800" fill="#C0392B">Fire Indicator Panel</text>
+  <text x="150" y="376" text-anchor="middle" font-size="10.5" font-weight="700" fill="#8E5B55">certified EWIS — separate</text>
+  <text x="150" y="391" text-anchor="middle" font-size="10.5" font-weight="600" fill="#8E5B55">system, untouched</text>
+  <line x1="150" y1="330" x2="150" y2="256" stroke="#C0392B" stroke-width="3" stroke-linecap="round" marker-end="url(#arrR)"/>
+  <text x="160" y="296" font-size="9.5" font-weight="800" fill="#C0392B">dry contact (N/C)</text>
+  <text x="160" y="311" font-size="9" font-weight="700" fill="#8E5B55">GPIO — holds all bells</text>
+
+  <!-- ══ SWITCH ══ -->
+  <rect x="400" y="330" width="220" height="66" rx="14" fill="#FFFFFF" stroke="#E7DFCC" stroke-width="2"/>
+  <text x="510" y="355" text-anchor="middle" font-size="12.5" font-weight="800" fill="#22322A">Netgear M4250 PoE switch</text>
+  <text x="510" y="373" text-anchor="middle" font-size="10.5" font-weight="600" fill="#5B6B60">Dante AV VLAN · IGMP · PTP QoS</text>
+  <text x="510" y="388" text-anchor="middle" font-size="10.5" font-weight="600" fill="#5B6B60">+ inter-block fibre/copper links</text>
+
+  <!-- AHM → switch (Dante) -->
+  <line x1="510" y1="250" x2="510" y2="324" stroke="#C68F26" stroke-width="4" stroke-linecap="round" marker-end="url(#arrB)"/>
+  <text x="522" y="292" font-size="9.5" font-weight="800" fill="#C68F26">Dante primary</text>
+
+  <!-- Pi → AHM (control) -->
+  <line x1="300" y1="150" x2="394" y2="150" stroke="#1E4D3B" stroke-width="3" stroke-dasharray="9,6" stroke-linecap="round" marker-end="url(#arrG)"/>
+  <text x="347" y="138" text-anchor="middle" font-size="9.5" font-weight="800" fill="#1E4D3B">TCP :51325</text>
+  <text x="347" y="168" text-anchor="middle" font-size="9" font-weight="700" fill="#5B6B60">play · route · mute · hold</text>
+
+  <!-- Pi ↔ switch (network) -->
+  <path d="M 240 250 L 240 300 L 430 300 L 430 324" fill="none" stroke="#9AA69D" stroke-width="2.5" stroke-dasharray="2,5" stroke-linecap="round" marker-end="url(#arrN)"/>
+  <text x="335" y="292" text-anchor="middle" font-size="9" font-weight="700" fill="#9AA69D">PoE · LAN</text>
+
+  <!-- ══ STAFF (via LAN) ══ -->
+  <rect x="400" y="436" width="220" height="56" rx="14" fill="#FFFFFF" stroke="#E7DFCC" stroke-width="2"/>
+  <text x="510" y="459" text-anchor="middle" font-size="12.5" font-weight="800" fill="#22322A">Front office / iPad</text>
+  <text x="510" y="477" text-anchor="middle" font-size="10.5" font-weight="600" fill="#5B6B60">same Schoolyard web UI, via LAN</text>
+  <line x1="510" y1="436" x2="510" y2="402" stroke="#9AA69D" stroke-width="2.5" stroke-dasharray="2,5" stroke-linecap="round" marker-end="url(#arrN)"/>
+
+  <!-- ══ OFFICE PORTAL ══ -->
+  <rect x="60" y="470" width="200" height="72" rx="14" fill="#1E4D3B"/>
+  <text x="160" y="497" text-anchor="middle" font-size="12" font-weight="800" fill="#FBF8F1">BNS office portal</text>
+  <text x="160" y="514" text-anchor="middle" font-size="10" font-weight="600" fill="#BCCFC2">Docker · fixed IP</text>
+  <text x="160" y="529" text-anchor="middle" font-size="10" font-weight="600" fill="#BCCFC2">dashboards · alerts</text>
+  <path d="M 400 375 L 300 375 L 300 506 L 266 506" fill="none" stroke="#9AA69D" stroke-width="2.5" stroke-dasharray="2,5" stroke-linecap="round" marker-end="url(#arrN)"/>
+  <text x="308" y="435" font-size="9" font-weight="700" fill="#9AA69D">outbound</text>
+  <text x="308" y="449" font-size="9" font-weight="700" fill="#9AA69D">HTTPS :443</text>
+  <text x="308" y="463" font-size="9" font-weight="700" fill="#9AA69D">heartbeats · events</text>
+
+  <!-- ══ BLOCKS (Dante amps) ══ -->
+  <g>
+    <rect x="760" y="290" width="280" height="70" rx="14" fill="#FDF3DC" stroke="#E3C77F" stroke-width="2"/>
+    <text x="900" y="317" text-anchor="middle" font-size="12.5" font-weight="800" fill="#22322A">Block A — Classrooms K–2</text>
+    <text x="900" y="336" text-anchor="middle" font-size="10.5" font-weight="600" fill="#8A6F33">Dante amp → 100V speakers</text>
+
+    <rect x="760" y="372" width="280" height="70" rx="14" fill="#FDF3DC" stroke="#E3C77F" stroke-width="2"/>
+    <text x="900" y="399" text-anchor="middle" font-size="12.5" font-weight="800" fill="#22322A">Block B — Classrooms 3–6</text>
+    <text x="900" y="418" text-anchor="middle" font-size="10.5" font-weight="600" fill="#8A6F33">Dante amp → 100V speakers</text>
+
+    <rect x="760" y="454" width="280" height="70" rx="14" fill="#FDF3DC" stroke="#E3C77F" stroke-width="2"/>
+    <text x="900" y="481" text-anchor="middle" font-size="12.5" font-weight="800" fill="#22322A">Admin &amp; Library</text>
+    <text x="900" y="500" text-anchor="middle" font-size="10.5" font-weight="600" fill="#8A6F33">Dante amp → 100V speakers</text>
+
+    <rect x="760" y="536" width="280" height="70" rx="14" fill="#FDF3DC" stroke="#E3C77F" stroke-width="2"/>
+    <text x="900" y="563" text-anchor="middle" font-size="12.5" font-weight="800" fill="#22322A">Hall &amp; COLA horns</text>
+    <text x="900" y="582" text-anchor="middle" font-size="10.5" font-weight="600" fill="#8A6F33">Dante amp → 100V speakers</text>
+  </g>
+
+  <!-- switch → blocks (Dante spine) -->
+  <line x1="620" y1="363" x2="700" y2="363" stroke="#C68F26" stroke-width="4" stroke-linecap="round"/>
+  <line x1="700" y1="325" x2="700" y2="571" stroke="#C68F26" stroke-width="4" stroke-linecap="round"/>
+  <line x1="700" y1="325" x2="754" y2="325" stroke="#C68F26" stroke-width="4" stroke-linecap="round" marker-end="url(#arrB)"/>
+  <line x1="700" y1="407" x2="754" y2="407" stroke="#C68F26" stroke-width="4" stroke-linecap="round" marker-end="url(#arrB)"/>
+  <line x1="700" y1="489" x2="754" y2="489" stroke="#C68F26" stroke-width="4" stroke-linecap="round" marker-end="url(#arrB)"/>
+  <line x1="700" y1="571" x2="754" y2="571" stroke="#C68F26" stroke-width="4" stroke-linecap="round" marker-end="url(#arrB)"/>
+  <text x="712" y="286" font-size="9.5" font-weight="800" fill="#C68F26">Dante flows — one network drop per block</text>
+
+  <!-- ══ LEGEND ══ -->
+  <g font-size="10.5" font-weight="700">
+    <line x1="60" y1="600" x2="98" y2="600" stroke="#C68F26" stroke-width="4" stroke-linecap="round"/>
+    <text x="106" y="604" fill="#22322A">Audio (Dante / analogue)</text>
+    <line x1="270" y1="600" x2="308" y2="600" stroke="#1E4D3B" stroke-width="3" stroke-dasharray="9,6" stroke-linecap="round"/>
+    <text x="316" y="604" fill="#22322A">Control</text>
+    <line x1="394" y1="600" x2="432" y2="600" stroke="#C0392B" stroke-width="3" stroke-linecap="round"/>
+    <text x="440" y="604" fill="#22322A">Safety contact</text>
+    <line x1="550" y1="600" x2="588" y2="600" stroke="#9AA69D" stroke-width="2.5" stroke-dasharray="2,5" stroke-linecap="round"/>
+    <text x="596" y="604" fill="#22322A">Network / telemetry</text>
+  </g>
+  <text x="60" y="630" font-size="10" font-weight="700" fill="#8E5B55">Certified EWIS remains fully independent — Bell Commander only holds its own bells during an alarm.</text>
+  <text x="60" y="648" font-size="10" font-weight="700" fill="#5B6B60">A power or link failure in one block silences only that block — every other zone keeps ringing.</text>
+</svg>

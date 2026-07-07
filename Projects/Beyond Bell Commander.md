@@ -48,8 +48,11 @@ Designed from scratch for maintainability and stability. Three lines:
 - Verify: WAV storage/backup-restore with sounds loaded · direct playback-channel trigger over TCP · Events fallback end-to-end (Manage > Events, Track Playback) · whether Events are writable over AH-Net (capture System Manager while creating one) · AVIO music path + auto-fallback
 - Keep one persistent AHM TCP session with heartbeat/reconnect
 
-## Docs produced
-- Product Plan v0.1 (Algo removed; §6.1 remote mgmt decided) · Hardware options list · Signal flow SVGs (analogue + Dante) · UI comparison sheet → Schoolyard
+## Docs produced (all in Attachments)
+- [[Bell Commander Product Plan v0.1]] (Algo removed; §6.1 remote mgmt decided — note: pre-dates Architecture v2 in places)
+- [[Bell Commander Hardware Options]]
+- Signal flow: [[bell-commander-signal-flow-dante.svg]] (current) · [[bell-commander-signal-flow-analogue.svg]] (superseded)
+- UI comparison sheet: [[bell-commander-ui-options.html]] → Schoolyard chosen
 
 ## Status
 - Demo UI complete (Schoolyard) — [[Bell Commander Demo UI]]
