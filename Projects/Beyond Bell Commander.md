@@ -45,6 +45,11 @@ Designed from scratch for maintainability and stability. Three lines:
 ## Bench checklist (prototype)
 - Pi 5 · AHM-16 + Dante card · one Dante amp · M4250 · GPIO EVAC via optocoupler
 - AHM: set **static IP** (currently 192.168.1.168 on the bench after a DHCP move — pin it; commissioning checklist item: "AHM IP fixed + recorded in site config")
+
+### Office bench access (confirmed 2026-07-07, over Sophos VPN)
+Reached from home over the **Sophos SSL VPN** — office subnets `172.16.200.0/24` + `172.16.220.0/24`, gateway `172.16.240.129`. VPN must be up or nothing below is reachable.
+- **Prototype Pi:** `ssh pi@172.16.200.217` — key-based (ed25519 in `/home/pi/.ssh/authorized_keys`), no password prompt; passwordless sudo. Pi 5 Model B Rev 1.1, Raspberry Pi OS / Debian 12 bookworm, kernel `6.12.75+rpt-rpi-2712`. Portrait DSI touch display (`.xinitrc`: `xrandr --output DSI-2 --rotate left` + touch coordinate-transform matrix, backlight control), Chromium `--kiosk` fullscreen. Slated to be wiped and rebuilt as the Beyond Bell prototype (single-box Pi + touch = one of the decoupled display options; no Docker on this Pi). Old kiosk build lives in `~/kiosk` (git repo: `kiosk-app.service` Flask on :80, `nodered.service` on :1880, ADB rig driving an Android device) — to be removed.
+- **Office AHM:** `172.16.200.127` (confirmed online: TCP :51325 open, no SSH/web). Separate unit from the bench AHM at 192.168.1.168. Driver reuses [[AHM Reverse Engineering]] (`ahm_player.py`/`ahm_server.py`, persistent TCP :51325).
 - Verify: WAV storage/backup-restore with sounds loaded · direct playback-channel trigger over TCP · Events fallback end-to-end (Manage > Events, Track Playback) · whether Events are writable over AH-Net (capture System Manager while creating one) · AVIO music path + auto-fallback
 - Keep one persistent AHM TCP session with heartbeat/reconnect
 
