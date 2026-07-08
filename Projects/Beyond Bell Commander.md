@@ -48,10 +48,42 @@ Designed from scratch for maintainability and stability. Three lines:
 
 ### Office bench access (confirmed 2026-07-07, over Sophos VPN)
 Reached from home over the **Sophos SSL VPN** — office subnets `172.16.200.0/24` + `172.16.220.0/24`, gateway `172.16.240.129`. VPN must be up or nothing below is reachable.
-- **Prototype Pi:** `ssh pi@172.16.200.217` — key-based (ed25519 in `/home/pi/.ssh/authorized_keys`), no password prompt; passwordless sudo. Pi 5 Model B Rev 1.1, Raspberry Pi OS / Debian 12 bookworm, kernel `6.12.75+rpt-rpi-2712`. Portrait DSI touch display (`.xinitrc`: `xrandr --output DSI-2 --rotate left` + touch coordinate-transform matrix, backlight control), Chromium `--kiosk` fullscreen. Slated to be wiped and rebuilt as the Beyond Bell prototype (single-box Pi + touch = one of the decoupled display options; no Docker on this Pi). Old kiosk build lives in `~/kiosk` (git repo: `kiosk-app.service` Flask on :80, `nodered.service` on :1880, ADB rig driving an Android device) — to be removed.
+- **Prototype Pi:** `ssh pi@172.16.200.217` — key-based (ed25519 in `/home/pi/.ssh/authorized_keys`), no password prompt; passwordless sudo. Pi 5 Model B Rev 1.1, Raspberry Pi OS / Debian 12 bookworm, kernel `6.12.75+rpt-rpi-2712`. Portrait DSI touch display (`.xinitrc`: `xrandr --output DSI-2 --rotate left` + touch coordinate-transform matrix). **Now the deployed Beyond Bell prototype** (see Prototype build below): `bellcommander.service` on :80, Chromium `--kiosk` repointed to the appliance UI (`http://127.0.0.1/`). Old kiosk build removed 8 Jul — `~/kiosk` deleted (was pushed to its own repo), `kiosk-app.service`/`nodered.service`/`adb-connect.service` disabled. No Docker on this Pi.
 - **Office AHM:** `172.16.200.127` (confirmed online: TCP :51325 open, no SSH/web). Separate unit from the bench AHM at 192.168.1.168. Driver reuses [[AHM Reverse Engineering]] (`ahm_player.py`/`ahm_server.py`, persistent TCP :51325).
 - Verify: WAV storage/backup-restore with sounds loaded · direct playback-channel trigger over TCP · Events fallback end-to-end (Manage > Events, Track Playback) · whether Events are writable over AH-Net (capture System Manager while creating one) · AVIO music path + auto-fallback
 - Keep one persistent AHM TCP session with heartbeat/reconnect
+
+## Prototype build — deployed 8 Jul 2026
+First working appliance built and running on the office Pi (`172.16.200.217`, systemd `bellcommander.service`, serves on **:80**), driving the **real office AHM** (`172.16.200.127`). Code: `Desktop\Beyond Bell Commander\engine` (not a git repo yet; `README.md` + `DEPLOY.md` inside). Build the React UI on the dev box → vendor into `engine/bellcommander/static` → redeploy over the VPN. Survives reboot (verified).
+
+### Engine (hardware-free core, ~78 tests, "did we break bells?" is a CI answer)
+- `compile_day(config, date)` → sorted bell list or a silent reason. Gating: **no-bell date → special day → weekend → out of term → template**. (A *special day* = per-date template; forces a ringing day, overriding weekend/holidays — fixed 8 Jul after it silently no-showed out of term.)
+- `Engine.tick(now)` — 1-second loop, fires each bell once inside a grace window (never rings a stale bell after a restart), EVAC/silence/skip/manual overrides, recompiles at midnight, DST-correct via `zoneinfo`.
+- `SiteConfig` = one pydantic-validated JSON (zones, groups, sounds, day templates, calendar). Bad references fail at load.
+- **AHMDriver** — persistent Ext-Control TCP :51325 (play SysEx, mute, level, get-level heartbeat, get-name). Fails soft, never crashes the tick loop. **FakeAHM** speaks the same protocol → the whole schedule→driver→AHM path is tested with no hardware. Real office AHM replied to get-level in MIDI *running status* (7-byte, not 9) — driver fixed to accept it.
+- Audit log = **SQLite (WAL)**, every ring / skip / hold / EVAC / manual, UTC at source.
+- **FastAPI** wraps it (blocking tick runs in an executor thread) and serves the Schoolyard React UI.
+
+### UI (Schoolyard React, served from the appliance)
+Tabs: **Today** (live countdown, chalkboard timeline, Ring/Skip/Silence/EVAC), **Calendar** (year view from the real calendar), **Zones** (live mute — switch goes red when muted), **Log**, **Setup** (commissioning), **System**.
+- **Setup** sub-tabs — School / Sounds & Zones / Timetable / Calendar — with one Save that validates and **hot-reloads live** (a bad edit is rejected, running config keeps ringing).
+
+### Commissioning = "point at the AHM + the DoE"
+All importers fetch *candidates for review*, then save through the validated config write.
+- **Bell sounds ← AHM library** (AHNet :51321 track list). Office AHM: Period_Bell, Lock_Down, Lock_In, EVAC, All_Clear, Shelter-in-place.
+- **Zones ← AHM zone names** (Ext-Control get-name). Office AHM: Gym, Canteen, Kiss&Ride, B/C/D Block Int/Ext (ch 1-8). Renaming a zone + Save **writes the name back to the AHM** (AHNet name-manager → shows in System Manager). Each zone carries an "AHM ch" so mutes/routing hit the right output.
+- **Timetable ← the school's bell-times page** (restricted to `schools.nsw.gov.au`). Parses the DoE CMS layout; times reliable, labels reviewed.
+- **Term dates ← NSW DoE calendar** (`education.nsw.gov.au/schooling/calendars/{year}`, Eastern/Western). **Public holidays ← NSW** (Nager.Date, filtered to NSW), now with the holiday *name* stored per date.
+
+### System settings
+- **Network**: DHCP/static via NetworkManager with a **90 s auto-revert safety** (a bad static IP can't lock out a remote appliance); MAC shown.
+- **Display**: brightness + **sleep timer** (blank after N idle minutes, wake on touch) on the DSI panel; backlight is `pi`-writable, an X-side `xprintidle` watcher does the blanking.
+- **Time**: **custom NTP server** (systemd-timesyncd drop-in), with clock-sync status shown — silent drift = broken bells.
+
+### Open items
+- **Bell group → zone routing NOT wired yet.** The Setup group buttons edit the zone list fine, but the driver plays every bell on the AHM Stereo player (→ whole school); the group's zones aren't honoured. **Decided: Option 3 — per-bell AHM matrix crosspoints — to do 9 Jul**: RE the matrix-send command (tshark capture + diff of System Manager wiggling a crosspoint, same method as [[AHM Reverse Engineering]]), then set crosspoints per `trigger_bell`.
+- **Phone-home portal** — blocked (no BNS portal details yet); audit log is already the source of truth.
+- Still the **example site config** (out of term today → silent); needs a real commissioned schedule. Also: systemd watchdog, and confirm the display-sleep self-wake was a real touch vs phantom DSI input.
 
 ## Docs produced (all in Attachments)
 - [[Bell Commander Product Plan v0.1]] (Algo removed; §6.1 remote mgmt decided — note: pre-dates Architecture v2 in places)
@@ -60,8 +92,9 @@ Reached from home over the **Sophos SSL VPN** — office subnets `172.16.200.0/2
 - UI comparison sheet: [[bell-commander-ui-options.html]] → Schoolyard chosen
 
 ## Status
-- Demo UI complete (Schoolyard) — [[Bell Commander Demo UI]]
-- Bell scheduler fetches real bell times (see [[Campbelltown PS]]) and [[NSW 2026 Term Dates]]
+- **Working prototype deployed to the office Pi (8 Jul 2026)** — full commissioning UI, driving the real office AHM. See *Prototype build* above. ~78 tests green.
+- Demo UI ([[Bell Commander Demo UI]]) superseded by the live Schoolyard React app served from the appliance.
+- **Next (9 Jul): bell group → zone matrix routing (Option 3).**
 - Evac audio produced for Campbelltown PS (offsite done, onsite pending voice file)
 
 ## Related
