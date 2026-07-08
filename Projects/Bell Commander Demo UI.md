@@ -19,7 +19,7 @@ It's React source, not a standalone app. Options:
 ## Notes
 - Simulated data only (Campbelltown PS, Q-SYS Core 110f, CP4) — no live hardware calls.
 - Voice/labels deliberately written for front-office staff, not integrators.
-- This is the UI layer only; the real engine is Node-RED + AHM per [[Beyond Bell Commander]].
+- This is the UI layer only; the real engine is the headless Python appliance service (FastAPI + SQLite) driving the AHM per [[Beyond Bell Commander]] (Architecture v2 — Node-RED is bench-only, not shipped).
 
 ## Related
 - [[Beyond Bell Commander]]

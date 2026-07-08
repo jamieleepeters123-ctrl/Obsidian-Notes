@@ -6,7 +6,7 @@ Allen & Heath AHM-16 protocol work — documented + proprietary protocols, now p
 
 - **UI**: http://192.168.1.42:8080 (WebSocket :8765) — Docker container `ahm-meter` on the [[PiFace Kiosk]] Pi, host networking, auto-restart
 - **AHM unit**: BNS-AHM-16, firmware V1.61, at 192.168.1.168 (home setup)
-- **Office AHM unit**: 172.16.200.127 — Beyond Bell prototype bench, reached over the Sophos VPN (confirmed online 2026-07-07: TCP :51325 open, no SSH/web). See [[Beyond Bell Commander]]
+- **Office AHM unit**: 172.16.200.127 — Beyond Bell office bench (distinct from the home bench AHM at 192.168.1.168), reached over the Sophos VPN (confirmed online 2026-07-07: TCP :51325 open, no SSH/web). See [[Beyond Bell Commander]]
 - **Source**: `C:\Users\jamie.peters\Documents\ahm-meter\` (`ahm_server.py` + `ahm_ui.html` + Docker files)
 - **Full byte-level docs**: `Desktop\Beyond Bell Commander\AHM\AHM-Control-Documentation.md`
 

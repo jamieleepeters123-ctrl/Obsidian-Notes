@@ -15,7 +15,7 @@ Phone-home data captured from each site → BNS office portal (Docker, fixed IP)
 
 ## Pi appliance health
 - CPU temp, load, memory, disk wear/free, uptime, unexpected reboots
-- Node-RED flow errors/restarts; UI process alive; software + flow version per site
+- Engine (Python service) errors/restarts; scheduler tick alive; UI process alive; software + config version per site
 - NTP sync status and offset (silent drift = broken bells)
 - Undervoltage/throttling flags
 

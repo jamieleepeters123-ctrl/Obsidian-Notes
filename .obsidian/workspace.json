@@ -11,13 +11,10 @@
             "id": "a899e0cf82f98c20",
             "type": "leaf",
             "state": {
-              "type": "bases",
-              "state": {
-                "file": "Untitled.base",
-                "viewName": "Table"
-              },
-              "icon": "lucide-table",
-              "title": "Untitled"
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
             }
           }
         ]
@@ -195,6 +192,13 @@
   },
   "active": "a899e0cf82f98c20",
   "lastOpenFiles": [
+    "Projects/AHM Reverse Engineering.md.tmp.31232.f71d5a528c2b",
+    "Projects/Bell Commander Demo UI.md.tmp.31232.94bf1bba0d58",
+    "Projects/Bell Commander Telemetry.md.tmp.31232.cf60ec005458",
+    "Projects/Beyond Bell Commander.md.tmp.31232.87e40129ea09",
+    "Home.md.tmp.31232.0fd1c99e77ca",
+    "Home.md.tmp.31232.b1952a10c2d6",
+    "Untitled.base",
     "Projects/Beyond Bell Commander.md.tmp.31232.c75ae4966304",
     "Projects/Bell Commander Demo UI.md",
     "Attachments/bell-commander-ui-options.html",
@@ -204,16 +208,12 @@
     "Attachments/Bell Commander Product Plan v0.1.md",
     "Attachments/Bell Commander Hardware Options.md",
     "Attachments",
-    "Untitled 1.base",
-    "Untitled.base",
     "2026-07-07.md",
     "Projects/BNS Field Tools.md",
     "Projects/Beyond Bell Commander.md",
     "Projects/Bell Commander Telemetry.md",
     "Projects/AI Inference Server.md",
     "Projects/AHM Reverse Engineering.md",
-    "Projects/AHM Reverse Engineering.md.tmp.31232.c8daaff91188",
-    "Projects/Beyond Bell Commander.md.tmp.31232.c60de727cb5c",
     "Sites/Campbelltown PS.md",
     "Sites/Batemans Bay High School.md",
     "Projects/Rack Builder App.md",
