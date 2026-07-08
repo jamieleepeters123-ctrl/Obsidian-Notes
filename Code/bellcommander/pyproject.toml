@@ -1,0 +1,13 @@
+[project]
+name = "bellcommander"
+version = "0.1.0"
+description = "Beyond Bell Commander appliance — school PA bell scheduler"
+requires-python = ">=3.11"
+dependencies = ["fastapi", "uvicorn", "zoneinfo; python_version < '3.9'"]
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-asyncio"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

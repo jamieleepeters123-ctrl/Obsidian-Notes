@@ -5,7 +5,7 @@ Allen & Heath AHM-16 protocol work — documented + proprietary protocols, now p
 ## Live system: AHM web control panel
 
 - **UI**: http://192.168.1.42:8080 (WebSocket :8765) — Docker container `ahm-meter` on the [[PiFace Kiosk]] Pi, host networking, auto-restart
-- **AHM unit**: BNS-AHM-16, firmware V1.61, at 192.168.1.168 (home setup)
+- **AHM unit**: BNS-AHM-16, firmware V1.61, at 192.168.1.168 (**office deployment** as of 2026-07-07 — Pi + AHM now racked at the BNS office; confirm IP set static)
 - **Office AHM unit**: 172.16.200.127 — Beyond Bell office bench (distinct from the home bench AHM at 192.168.1.168), reached over the Sophos VPN (confirmed online 2026-07-07: TCP :51325 open, no SSH/web). See [[Beyond Bell Commander]]
 - **Source**: `C:\Users\jamie.peters\Documents\ahm-meter\` (`ahm_server.py` + `ahm_ui.html` + Docker files)
 - **Full byte-level docs**: `Desktop\Beyond Bell Commander\AHM\AHM-Control-Documentation.md`
@@ -28,6 +28,11 @@ Allen & Heath AHM-16 protocol work — documented + proprietary protocols, now p
 - "Input/Zone Channel Name Colour Manager": object 0x1000+i = channel i+1 name (16-char buffer). Subscribe → live name pushes; write the object → rename. Colours likely 0x1040+i (not implemented)
 
 ## Updates
+
+### 2026-07-07 — office deployment
+- Pi + AHM-16 deployed at the BNS office (was home bench). `ahm-meter` container running the control panel.
+- This container's `ahm_server.py` **is effectively the Bell Commander AHM driver already field-running** — the v2 appliance service wraps a scheduler around this proven playback/routing/mute path. See [[Beyond Bell Commander]] Architecture v2.
+- TODO: confirm 192.168.1.168 is static (commissioning checklist item); update note if the office Pi differs from the [[PiFace Kiosk]] Pi.
 
 ### 2026-07-06 — names, zones, rename
 - Channel names on strips (SysEx get + live AHNet subscription — SM renames appear instantly)
