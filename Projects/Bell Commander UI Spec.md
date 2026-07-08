@@ -2,6 +2,8 @@
 
 Screen + settings structure for the Schoolyard UI. Source of feature intent: daily note 2026-07-07. Working demo: [[Bell Commander Demo UI]].
 
+> **Build status (8 Jul 2026):** the deployed appliance (`Desktop\Beyond Bell Commander\engine` — see [[Beyond Bell Commander]] → *Prototype build*) implements most of this: Network (Static/DHCP/MAC), Display brightness + sleep, Save (validated config + hot-reload), System Health (Log tab), commissioning importers. **Not yet built:** two-tier auth (login gates Setup/Settings), per-display settings, local audio-output select, and the drag-and-drop music-bell file transfer. The earlier `Code/bellcommander` skeleton + build-handoff note were **retired** — superseded by the deployed build.
+
 ## Access tiers (two levels)
 - **Staff** — no login for day-to-day. Today screen, ring / skip / manual, calendar view. Office staff never fight a password to skip a bell.
 - **Installer** — login (username + password) gates Setup, Settings, Network, System Health. Protects commissioning + infrastructure from accidental change.
