@@ -65,6 +65,6 @@ Reached from home over the **Sophos SSL VPN** — office subnets `172.16.200.0/2
 - Evac audio produced for Campbelltown PS (offsite done, onsite pending voice file)
 
 ## Related
-- [[Bell Commander Telemetry]] · [[Bell Commander Demo UI]] · [[AHM Reverse Engineering]] · [[Campbelltown PS]] · [[ELC Smart Panels]]
+- [[Bell Commander Telemetry]] · [[Bell Commander Demo UI]] · [[Bell Commander UI Spec]] · [[AHM Reverse Engineering]] · [[Campbelltown PS]] · [[ELC Smart Panels]]
 
 #bns #project/bell-commander
