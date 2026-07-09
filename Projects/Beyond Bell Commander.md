@@ -81,7 +81,7 @@ All importers fetch *candidates for review*, then save through the validated con
 - **Time**: **custom NTP server** (systemd-timesyncd drop-in), with clock-sync status shown — silent drift = broken bells.
 
 ### Open items
-- **Bell group → zone routing NOT wired yet.** The Setup group buttons edit the zone list fine, but the driver plays every bell on the AHM Stereo player (→ whole school); the group's zones aren't honoured. **Decided: Option 3 — per-bell AHM matrix crosspoints — to do 9 Jul**: RE the matrix-send command (tshark capture + diff of System Manager wiggling a crosspoint, same method as [[AHM Reverse Engineering]]), then set crosspoints per `trigger_bell`.
+- **Bell group → zone routing — matrix command RE'd + wired (9 Jul), activation pending.** The crosspoint command is cracked (see [[AHM Reverse Engineering]]: "Mixer" service, `object = 0x5000 + row*0x40 + col`, payload 01/00, 16×16). `AHMDriver.trigger_bell` now sets the group's zone crosspoints before the play — but **gated behind `matrix_source_row` (default off, so the prototype still plays whole-school for now)**, delta-tracked + fail-soft. **To activate:** one live experiment to fix `matrix_source_row` (which matrix row the media player feeds) + confirm the source/zone axis — play a bell, set a crosspoint from our client, hear/meter which zone responds. Also confirm the player actually routes *through* this input×zone matrix (the office AHM's 0x5xxx matrix read back mostly empty). RE write-up: `Desktop\Beyond Bell Commander\AHM\matrix-crosspoint-FINDINGS.md`.
 - **Phone-home portal** — blocked (no BNS portal details yet); audit log is already the source of truth.
 - Still the **example site config** (out of term today → silent); needs a real commissioned schedule. Also: systemd watchdog, and confirm the display-sleep self-wake was a real touch vs phantom DSI input.
 
@@ -94,7 +94,7 @@ All importers fetch *candidates for review*, then save through the validated con
 ## Status
 - **Working prototype deployed to the office Pi (8 Jul 2026)** — full commissioning UI, driving the real office AHM. See *Prototype build* above. ~78 tests green.
 - Demo UI ([[Bell Commander Demo UI]]) superseded by the live Schoolyard React app served from the appliance.
-- **Next (9 Jul): bell group → zone matrix routing (Option 3).**
+- **9 Jul: AHM matrix crosspoint command reverse-engineered + wired into the driver (gated).** Next: one live axis/source-row experiment to activate bell→zone routing. See *Open items*.
 - Evac audio produced for Campbelltown PS (offsite done, onsite pending voice file)
 
 ## Related

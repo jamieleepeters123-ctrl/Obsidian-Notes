@@ -26,8 +26,13 @@ Allen & Heath AHM-16 protocol work — documented + proprietary protocols, now p
 - Meter encoding: linear-in-dB, 256 counts/dB, 0x8001 = −110 dB sentinel, wraps mod 2¹⁶ above +18 dB
 - "Playback Manager": track-list TLV push, play cmd 0x1005 (channel/mode/track), stop 0x1006
 - "Input/Zone Channel Name Colour Manager": object 0x1000+i = channel i+1 name (16-char buffer). Subscribe → live name pushes; write the object → rename. Colours likely 0x1040+i (not implemented)
+- **"Mixer" service — matrix crosspoints (RE'd 2026-07-09):** each source→zone crosspoint is one object whose id is carried in the f1 `cmd` field: `object = 0x5000 + row*0x40 + col` (row, col 0..15 → a 16×16 matrix, objects 0x5000–0x53cf). Write payload `0x01` = route on, `0x00` = off. State read reports it 2-byte (0x0100 on / 0x0000 off). Confirmed live 6× (top-left = 0x5000). **Gotcha:** System Manager streams the mouse-cursor position to the AHM continuously while the pointer moves (fire-and-forget on a pre-opened handle, payload `<x> 00 <y> <y>`) — this floods captures; the crosspoint set is a tiny 1-byte write only on the *click*, isolated by holding the mouse STILL. Handles reassign every reconnect → open services by name. Which axis is source(input) vs zone(output) still to confirm by probing. Full write-up: `Desktop\Beyond Bell Commander\AHM\matrix-crosspoint-FINDINGS.md`.
 
 ## Updates
+
+### 2026-07-09 — matrix crosspoint command (bell→zone routing)
+- Reverse-engineered the "Mixer" service crosspoint write (see Protocol findings above) — the last piece for [[Beyond Bell Commander]] bell-group → zone routing. Method: state-diff of System Manager crosspoint OFF vs ON reconnect dumps + a still-mouse live capture to isolate the 1-byte click write. tshark on the Sophos TAP, SM V1.61, against the office AHM 172.16.200.127 over VPN.
+- Implemented in the engine (`ahnet.set_matrix_crosspoints` + gated `AHMDriver` routing, 84 tests). Activation pending one live axis/source-row experiment.
 
 ### 2026-07-07 — office deployment
 - Pi + AHM-16 deployed at the BNS office (was home bench). `ahm-meter` container running the control panel.
