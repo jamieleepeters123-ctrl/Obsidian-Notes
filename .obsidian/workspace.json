@@ -211,6 +211,7 @@
   },
   "active": "354e684798f2c6ea",
   "lastOpenFiles": [
+    "2026-07-10.md.tmp.20492.45db7157af2d",
     "2026-07-10.md.tmp.20492.c91bbea0d47a",
     "2026-07-10.md.tmp.20492.2bd19e9268d7",
     "Projects/Beyond Bell Commander.md.tmp.20492.7913e527be56",
@@ -228,7 +229,6 @@
     "Code/bellcommander/bellcommander/telemetry/__init__.py",
     "Code/bellcommander/bellcommander/engine/__init__.py",
     "Code/bellcommander/bellcommander/engine/supervisor.py",
-    "Code/bellcommander/bellcommander/engine/compiler.py",
     "Code/bellcommander/README.md",
     "Projects/Beyond Bell Commander.md",
     "Projects/Bell Commander Demo UI.md",
