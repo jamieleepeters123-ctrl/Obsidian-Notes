@@ -34,9 +34,23 @@
               "icon": "lucide-file",
               "title": "2026-07-10"
             }
+          },
+          {
+            "id": "b4353ab0521dc390",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Bell Commander To-Do-List.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Bell Commander To-Do-List"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -209,16 +223,19 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "354e684798f2c6ea",
+  "active": "b4353ab0521dc390",
   "lastOpenFiles": [
+    "Projects/Beyond Bell Commander.md.tmp.20492.b829bfff70f6",
+    "2026-07-10.md.tmp.20492.2b9b6739bded",
+    "2026-07-10.md",
+    "Bell Commander To-Do-List.md",
+    "2026-07-09.md",
     "2026-07-10.md.tmp.20492.45db7157af2d",
     "2026-07-10.md.tmp.20492.c91bbea0d47a",
     "2026-07-10.md.tmp.20492.2bd19e9268d7",
     "Projects/Beyond Bell Commander.md.tmp.20492.7913e527be56",
     "Projects/Beyond Bell Commander.md.tmp.20492.50ccea6ad488",
     "2026-07-10.md.tmp.20492.66226d801b58",
-    "2026-07-09.md",
-    "2026-07-10.md",
     "2026-07-08.md",
     "2026-07-07.md",
     "README.md",
@@ -227,8 +244,6 @@
     "Projects/Bell Commander UI Spec.md.tmp.24924.986ea3292d9c",
     "Code/bellcommander/bellcommander/web/__init__.py",
     "Code/bellcommander/bellcommander/telemetry/__init__.py",
-    "Code/bellcommander/bellcommander/engine/__init__.py",
-    "Code/bellcommander/bellcommander/engine/supervisor.py",
     "Code/bellcommander/README.md",
     "Projects/Beyond Bell Commander.md",
     "Projects/Bell Commander Demo UI.md",
@@ -247,7 +262,6 @@
     "Projects/PiFace Kiosk.md",
     "Projects/Home Assistant + Zigbee2MQTT.md",
     "Projects/LightShark Projects.md",
-    "Projects/GLA - Bright Sparx Proposal.md",
-    "Inbox/Inbox.md"
+    "Projects/GLA - Bright Sparx Proposal.md"
   ]
 }

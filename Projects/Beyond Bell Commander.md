@@ -98,6 +98,7 @@ All importers fetch *candidates for review*, then save through the validated con
 - Demo UI ([[Bell Commander Demo UI]]) superseded by the live Schoolyard React app served from the appliance.
 - **9 Jul: AHM matrix crosspoint command reverse-engineered + wired into the driver (gated).**
 - **10 Jul: bell→zone routing LIVE on the office AHM; zones commissioned to the real 8; App↔AHM two-way name sync; Today page + Setup EVAC/Messages tab built + deployed.** See *Open items*.
+- **10 Jul (pm): SECOND DSP — AtlasIED Atmosphere driver, validated live on a bench AZM4** (172.16.200.161). JSON-RPC :5321; DSP-aware commissioning (Load-from-Atlas Pull + Push build-sheet/Verify, since Atlas names are read-only); group→zone routing via per-message zone bundles (Option A); rang a bell end-to-end; real Stop (`StopMessage`) + per-sound track length. Proves the `Driver` abstraction — a whole DSP was one file + fake + tests, brain unchanged. Also: config Export/Import (Setup→School), log-time UTC→local fix, code under git backed up to bns-tooling. 106 tests.
 - Evac audio produced for Campbelltown PS (offsite done, onsite pending voice file)
 
 ## Related
