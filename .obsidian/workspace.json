@@ -209,8 +209,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "b36c96ce723203c2",
+  "active": "354e684798f2c6ea",
   "lastOpenFiles": [
+    "Projects/Beyond Bell Commander.md.tmp.20492.7913e527be56",
+    "Projects/Beyond Bell Commander.md.tmp.20492.50ccea6ad488",
+    "2026-07-10.md.tmp.20492.66226d801b58",
     "2026-07-09.md",
     "2026-07-10.md",
     "2026-07-08.md",
@@ -226,8 +229,6 @@
     "Code/bellcommander/bellcommander/engine/compiler.py",
     "Code/bellcommander/bellcommander/drivers/__init__.py",
     "Code/bellcommander/bellcommander/drivers/fake.py",
-    "Code/bellcommander/bellcommander/drivers/ahm.py",
-    "Code/bellcommander/bellcommander/config/__init__.py",
     "Code/bellcommander/README.md",
     "Projects/Beyond Bell Commander.md",
     "Projects/Bell Commander Demo UI.md",
@@ -247,7 +248,6 @@
     "Projects/Home Assistant + Zigbee2MQTT.md",
     "Projects/LightShark Projects.md",
     "Projects/GLA - Bright Sparx Proposal.md",
-    "Inbox/Inbox.md",
-    "Reference/Pi Kiosk Config.md"
+    "Inbox/Inbox.md"
   ]
 }
