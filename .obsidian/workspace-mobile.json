@@ -1,0 +1,218 @@
+{
+  "main": {
+    "id": "4c719dee37c178e5",
+    "type": "split",
+    "children": [
+      {
+        "id": "c26446e885244ee0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "63c2d90caa81564a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Bell Commander To-Do-List.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Bell Commander To-Do-List"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "2273d5e91be8547e",
+    "type": "mobile-drawer",
+    "children": [
+      {
+        "id": "071d6902c158e0af",
+        "type": "leaf",
+        "state": {
+          "type": "file-explorer",
+          "state": {
+            "sortOrder": "alphabetical",
+            "autoReveal": false
+          },
+          "icon": "lucide-folder-closed",
+          "title": "Files"
+        }
+      },
+      {
+        "id": "489a7aa978127ef1",
+        "type": "leaf",
+        "state": {
+          "type": "search",
+          "state": {
+            "query": "",
+            "matchingCase": false,
+            "explainSearch": false,
+            "collapseAll": false,
+            "extraContext": false,
+            "sortOrder": "alphabetical"
+          },
+          "icon": "lucide-search",
+          "title": "Search"
+        }
+      },
+      {
+        "id": "a258618787a6eff4",
+        "type": "leaf",
+        "state": {
+          "type": "tag",
+          "state": {
+            "sortOrder": "frequency",
+            "useHierarchy": true,
+            "showSearch": false,
+            "searchQuery": ""
+          },
+          "icon": "lucide-tags",
+          "title": "Tags"
+        }
+      },
+      {
+        "id": "9bc1000ddbf4a36b",
+        "type": "leaf",
+        "state": {
+          "type": "all-properties",
+          "state": {
+            "sortOrder": "frequency",
+            "showSearch": false,
+            "searchQuery": ""
+          },
+          "icon": "lucide-archive",
+          "title": "All properties"
+        }
+      },
+      {
+        "id": "0a8b10b49545d483",
+        "type": "leaf",
+        "state": {
+          "type": "bookmarks",
+          "state": {},
+          "icon": "lucide-bookmark",
+          "title": "Bookmarks"
+        }
+      }
+    ],
+    "currentTab": 0
+  },
+  "right": {
+    "id": "da0019547d6281eb",
+    "type": "mobile-drawer",
+    "children": [
+      {
+        "id": "017c0ce1748e94cb",
+        "type": "leaf",
+        "state": {
+          "type": "backlink",
+          "state": {
+            "collapseAll": false,
+            "extraContext": false,
+            "sortOrder": "alphabetical",
+            "showSearch": false,
+            "searchQuery": "",
+            "backlinkCollapsed": false,
+            "unlinkedCollapsed": true
+          },
+          "icon": "links-coming-in",
+          "title": "Backlinks"
+        }
+      },
+      {
+        "id": "c01e3e46a01188d5",
+        "type": "leaf",
+        "state": {
+          "type": "outgoing-link",
+          "state": {
+            "linksCollapsed": false,
+            "unlinkedCollapsed": true
+          },
+          "icon": "links-going-out",
+          "title": "Outgoing links"
+        }
+      },
+      {
+        "id": "fb3f0bf734973293",
+        "type": "leaf",
+        "state": {
+          "type": "outline",
+          "state": {
+            "followCursor": false,
+            "showSearch": false,
+            "searchQuery": ""
+          },
+          "icon": "lucide-list",
+          "title": "Outline"
+        }
+      },
+      {
+        "id": "225dfb5e66645a50",
+        "type": "leaf",
+        "state": {
+          "type": "git-view",
+          "state": {},
+          "icon": "git-pull-request",
+          "title": "Source Control"
+        }
+      }
+    ],
+    "currentTab": 3
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false,
+      "obsidian-git:Open Git source control": false
+    }
+  },
+  "active": "63c2d90caa81564a",
+  "lastOpenFiles": [
+    "Untitled.md",
+    "Bell Commander To-Do-List.md",
+    "Projects/The Candle Collection.md",
+    "/Projects/The Candle Collection.md",
+    "/Projects",
+    "Projects/AHM Reverse Engineering.md",
+    "Sites/Campbelltown PS.md",
+    "Sites/Batemans Bay High School.md",
+    "Reference/Pi Kiosk Config.md",
+    "Reference/NSW 2026 Term Dates.md",
+    "Reference/ELC Smart Panels.md",
+    "README.md",
+    "Projects/Tooling Docker Host.md",
+    "Projects/Rack Builder App.md",
+    "Projects/PiFace Kiosk.md",
+    "Projects/Home Assistant + Zigbee2MQTT.md",
+    "Projects/GLA - Bright Sparx Proposal.md",
+    "Projects/Beyond Bell Commander.md",
+    "Projects/Bell Commander UI Spec.md",
+    "Projects/Bell Commander Telemetry.md",
+    "Projects/Bell Commander Demo UI.md",
+    "Projects/BNS Field Tools.md",
+    "Projects/AI Inference Server.md",
+    "Inbox/Inbox.md",
+    "Home.md",
+    "Attachments/bell-commander-ui-options.html",
+    "Attachments/bell-commander-signal-flow-dante.svg",
+    "Attachments/bell-commander-signal-flow-analogue.svg",
+    "Attachments/bell-commander-demo.jsx",
+    "Attachments/Bell Commander Product Plan v0.1.md",
+    "Attachments/Bell Commander Hardware Options.md",
+    "Sites",
+    "Reference",
+    "Projects",
+    "Inbox",
+    "Attachments"
+  ]
+}
