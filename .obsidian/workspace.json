@@ -11,46 +11,13 @@
             "id": "a899e0cf82f98c20",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "2026-07-09.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "2026-07-09"
-            }
-          },
-          {
-            "id": "b36c96ce723203c2",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "2026-07-10.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "2026-07-10"
-            }
-          },
-          {
-            "id": "b4353ab0521dc390",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Bell Commander To-Do-List.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Bell Commander To-Do-List"
+              "title": "New tab"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -223,35 +190,27 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "b4353ab0521dc390",
+  "active": "a899e0cf82f98c20",
   "lastOpenFiles": [
-    "Projects/Beyond Bell Commander.md.tmp.20492.b829bfff70f6",
-    "2026-07-10.md.tmp.20492.2b9b6739bded",
-    "2026-07-10.md",
-    "Bell Commander To-Do-List.md",
-    "2026-07-09.md",
-    "2026-07-10.md.tmp.20492.45db7157af2d",
-    "2026-07-10.md.tmp.20492.c91bbea0d47a",
-    "2026-07-10.md.tmp.20492.2bd19e9268d7",
-    "Projects/Beyond Bell Commander.md.tmp.20492.7913e527be56",
-    "Projects/Beyond Bell Commander.md.tmp.20492.50ccea6ad488",
-    "2026-07-10.md.tmp.20492.66226d801b58",
-    "2026-07-08.md",
-    "2026-07-07.md",
-    "README.md",
-    "Home.md",
-    "Projects/Bell Commander UI Spec.md",
-    "Projects/Bell Commander UI Spec.md.tmp.24924.986ea3292d9c",
-    "Code/bellcommander/bellcommander/web/__init__.py",
-    "Code/bellcommander/bellcommander/telemetry/__init__.py",
-    "Code/bellcommander/README.md",
-    "Projects/Beyond Bell Commander.md",
+    "Projects/AHM Reverse Engineering.md.tmp.31232.f71d5a528c2b",
+    "Projects/Bell Commander Demo UI.md.tmp.31232.94bf1bba0d58",
+    "Projects/Bell Commander Telemetry.md.tmp.31232.cf60ec005458",
+    "Projects/Beyond Bell Commander.md.tmp.31232.87e40129ea09",
+    "Home.md.tmp.31232.0fd1c99e77ca",
+    "Home.md.tmp.31232.b1952a10c2d6",
+    "Untitled.base",
+    "Projects/Beyond Bell Commander.md.tmp.31232.c75ae4966304",
     "Projects/Bell Commander Demo UI.md",
+    "Attachments/bell-commander-ui-options.html",
+    "Attachments/bell-commander-demo.jsx",
     "Attachments/bell-commander-signal-flow-dante.svg",
     "Attachments/bell-commander-signal-flow-analogue.svg",
     "Attachments/Bell Commander Product Plan v0.1.md",
     "Attachments/Bell Commander Hardware Options.md",
+    "Attachments",
+    "2026-07-07.md",
     "Projects/BNS Field Tools.md",
+    "Projects/Beyond Bell Commander.md",
     "Projects/Bell Commander Telemetry.md",
     "Projects/AI Inference Server.md",
     "Projects/AHM Reverse Engineering.md",
@@ -262,6 +221,12 @@
     "Projects/PiFace Kiosk.md",
     "Projects/Home Assistant + Zigbee2MQTT.md",
     "Projects/LightShark Projects.md",
-    "Projects/GLA - Bright Sparx Proposal.md"
+    "Projects/GLA - Bright Sparx Proposal.md",
+    "Inbox/Inbox.md",
+    "README.md",
+    "Home.md",
+    "Reference/Pi Kiosk Config.md",
+    "Reference/NSW 2026 Term Dates.md",
+    "Reference/ELC Smart Panels.md"
   ]
 }

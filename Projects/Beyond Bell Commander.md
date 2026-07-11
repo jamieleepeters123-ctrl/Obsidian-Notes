@@ -81,9 +81,7 @@ All importers fetch *candidates for review*, then save through the validated con
 - **Time**: **custom NTP server** (systemd-timesyncd drop-in), with clock-sync status shown — silent drift = broken bells.
 
 ### Open items
-- **Bell group → zone routing — LIVE (10 Jul).** Crosspoint command RE'd ("Mixer" service, `object = 0x5000 + row*0x40 + col`, payload 01/00, 16×16 — see [[AHM Reverse Engineering]]) and activated: `matrix_source_row=0` = the AHM's **Input 1 "Bells"** row; zones map by AHM channel (col = ch−1). Proven end-to-end on the office AHM — a bell sounds only in its group's zones (verified via XPoint grid + zone meters). Zones re-commissioned to the AHM's real 8 (Gym/Canteen/Kiss&Ride/B·C·D block int/ext). RE write-up: `Desktop\Beyond Bell Commander\AHM\matrix-crosspoint-FINDINGS.md`.
-- **App ↔ AHM two-way sync (10 Jul).** App→AHM auto (rename on save, routing on ring); AHM→App auto-adopts System Manager zone renames (delta-safe 30s poll + `POST /api/ahm/sync`). Config stays source of truth.
-- **EVAC/Messages + Today page (10 Jul).** Configurable one-touch actions (`config.messages`): Setup → EVAC/Messages tab (per-action sound/group/placement/hold-release-stop/colour, Load-defaults); Today Emergency **popup** (Onsite/Off-Site EVAC, Lock In/Out, Test/Test End, All Clear, STOP) + Rainy Day quick button; removed Skip/Silence; **"Now ringing" indicator**. Runs via `POST /api/message`. *Still to do:* true STOP (AHNet playback-stop 0x1006 — currently only clears/releases); differentiate Onsite vs Off-Site; set the Rainy Day sound.
+- **Bell group → zone routing NOT wired yet.** The Setup group buttons edit the zone list fine, but the driver plays every bell on the AHM Stereo player (→ whole school); the group's zones aren't honoured. **Decided: Option 3 — per-bell AHM matrix crosspoints — to do 9 Jul**: RE the matrix-send command (tshark capture + diff of System Manager wiggling a crosspoint, same method as [[AHM Reverse Engineering]]), then set crosspoints per `trigger_bell`.
 - **Phone-home portal** — blocked (no BNS portal details yet); audit log is already the source of truth.
 - Still the **example site config** (out of term today → silent); needs a real commissioned schedule. Also: systemd watchdog, and confirm the display-sleep self-wake was a real touch vs phantom DSI input.
 
@@ -96,9 +94,7 @@ All importers fetch *candidates for review*, then save through the validated con
 ## Status
 - **Working prototype deployed to the office Pi (8 Jul 2026)** — full commissioning UI, driving the real office AHM. See *Prototype build* above. ~78 tests green.
 - Demo UI ([[Bell Commander Demo UI]]) superseded by the live Schoolyard React app served from the appliance.
-- **9 Jul: AHM matrix crosspoint command reverse-engineered + wired into the driver (gated).**
-- **10 Jul: bell→zone routing LIVE on the office AHM; zones commissioned to the real 8; App↔AHM two-way name sync; Today page + Setup EVAC/Messages tab built + deployed.** See *Open items*.
-- **10 Jul (pm): SECOND DSP — AtlasIED Atmosphere driver, validated live on a bench AZM4** (172.16.200.161). JSON-RPC :5321; DSP-aware commissioning (Load-from-Atlas Pull + Push build-sheet/Verify, since Atlas names are read-only); group→zone routing via per-message zone bundles (Option A); rang a bell end-to-end; real Stop (`StopMessage`) + per-sound track length. Proves the `Driver` abstraction — a whole DSP was one file + fake + tests, brain unchanged. Also: config Export/Import (Setup→School), log-time UTC→local fix, code under git backed up to bns-tooling. 106 tests.
+- **Next (9 Jul): bell group → zone matrix routing (Option 3).**
 - Evac audio produced for Campbelltown PS (offsite done, onsite pending voice file)
 
 ## Related
