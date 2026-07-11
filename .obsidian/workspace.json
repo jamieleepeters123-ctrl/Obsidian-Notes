@@ -190,8 +190,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "6cd96c4426681c05",
+  "active": "354e684798f2c6ea",
   "lastOpenFiles": [
+    "Projects/The Candle Collection.md",
+    "Projects/The Candle Collection.md.tmp.30908.3977bddff4db",
     "Bell Commander To-Do-List.md",
     "Projects/Beyond Bell Commander.md.tmp.20492.b829bfff70f6",
     "2026-07-10.md.tmp.20492.2b9b6739bded",
@@ -209,7 +211,6 @@
     "Home.md",
     "Projects/Bell Commander UI Spec.md",
     "Projects/Bell Commander UI Spec.md.tmp.24924.986ea3292d9c",
-    "Code/bellcommander/bellcommander/web/__init__.py",
     "Code/bellcommander/README.md",
     "Projects/Beyond Bell Commander.md",
     "Projects/Bell Commander Demo UI.md",

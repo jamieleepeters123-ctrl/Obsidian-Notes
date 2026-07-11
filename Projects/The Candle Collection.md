@@ -2,16 +2,16 @@
 
 E-commerce site for Anthony & Leanne's hand-poured sculptural candles (pillars, florals, keepsakes, faith pieces — pearl-white soy). Built and deployed 2026-07-11.
 
-**Live:** http://thecandlecollection.duckdns.org:8081 (public)
-**LAN:** http://192.168.1.41:8081 · Admin at `/admin` (password in `Desktop\Candle Website\admin_password.txt`)
+**Live:** https://thecandlecollection.duckdns.org (public, Let's Encrypt via Caddy)
+**LAN:** http://192.168.1.42:8081 · Admin at `/admin` (password in `Desktop\Candle Website\admin_password.txt`)
 
 ## Where it runs
 
-- **Host:** piface Pi ([[PiFace Kiosk]]) — now **192.168.1.41 wired**, WiFi disabled (was .42 on WiFi; caused 3.7 s ping spikes and intermittent page loads)
+- **Host:** piface Pi ([[PiFace Kiosk]]) — **192.168.1.42 on WiFi** (relocated; good signal at new spot)
 - **App:** `/home/piface/candles` — Flask + SQLite + Jinja + vanilla CSS/JS, venv, gunicorn via `candles.service` (systemd, auto-start, port **8081**; 8080 is the [[AHM Reverse Engineering|AHM panel]])
 - **Secrets:** `/home/piface/candles/.env` — `OPENAI_API_KEY`, `ADMIN_PASSWORD`, `FLASK_SECRET_KEY`
 - **DNS:** DuckDNS `thecandlecollection` — cron `~/duckdns/duck.sh` every 5 min keeps it on the (dynamic) public IP
-- **Port-forward:** UniFi Express, WAN 8081/TCP → 192.168.1.41:8081
+- **HTTPS:** Caddy on the Pi (80 + 4443, /etc/caddy/Caddyfile) reverse-proxies to :8081; UniFi forwards WAN 80 → .42:80 and WAN 443 → .42:4443
 
 ## What's in it
 
@@ -24,7 +24,7 @@ E-commerce site for Anthony & Leanne's hand-poured sculptural candles (pillars, 
 ## Useful commands
 
 ```bash
-ssh piface@192.168.1.41
+ssh piface@192.168.1.42
 sudo systemctl status candles.service
 sudo journalctl -u candles.service -f
 cd /home/piface/candles && ./venv/bin/python seed.py   # re-seed (skips existing)
@@ -33,5 +33,4 @@ cd /home/piface/candles && ./venv/bin/python seed.py   # re-seed (skips existing
 ## To do
 
 - [ ] GPT hero/story imagery — blocked on OpenAI billing hard limit (script ready: `gen_images.py`, gpt-image-1); stand-in product photos in `static/img/hero.jpg` + `story.jpg`
-- [ ] HTTPS — put Caddy in front (DuckDNS works with Let's Encrypt) before promoting the shop
 - [ ] Consider Stripe/PayID checkout later
