@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Projects/BNS Field Tools.md",
+                "file": "Projects/Beyond Bell Commander.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "BNS Field Tools"
+              "title": "Beyond Bell Commander"
             }
           }
         ]
@@ -196,10 +196,13 @@
   },
   "active": "a899e0cf82f98c20",
   "lastOpenFiles": [
-    "Projects/Beyond Bell Commander.md",
+    "err.tmp",
     "Projects/Bell Commander UI Spec.md",
     "Projects/Bell Commander Telemetry.md",
     "Projects/Bell Commander Demo UI.md",
+    "Attachments/Bell Commander Hardware Options.md",
+    "Projects/Beyond Bell Commander.md",
+    "Projects/BNS Field Tools.md",
     "Projects/The Candle Collection.md",
     "Projects/AI Inference Server.md",
     "Bell Commander To-Do-List.md",
@@ -224,15 +227,12 @@
     "Attachments/bell-commander-signal-flow-dante.svg",
     "Attachments/bell-commander-signal-flow-analogue.svg",
     "Attachments/Bell Commander Product Plan v0.1.md",
-    "Attachments/Bell Commander Hardware Options.md",
-    "Projects/BNS Field Tools.md",
     "Projects/AHM Reverse Engineering.md",
     "Sites/Campbelltown PS.md",
     "Sites/Batemans Bay High School.md",
     "Projects/Rack Builder App.md",
     "Projects/Strobe Beacon Spec.md",
     "Projects/PiFace Kiosk.md",
-    "Projects/Home Assistant + Zigbee2MQTT.md",
-    "Projects/LightShark Projects.md"
+    "Projects/Home Assistant + Zigbee2MQTT.md"
   ]
 }
