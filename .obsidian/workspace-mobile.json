@@ -230,7 +230,7 @@
         "state": {
           "type": "backlink",
           "state": {
-            "file": "2026-07-12.md",
+            "file": "Projects/Beyond Bell Commander.md",
             "collapseAll": false,
             "extraContext": false,
             "sortOrder": "alphabetical",
@@ -287,8 +287,11 @@
   },
   "active": "7747dfe30e56cda2",
   "lastOpenFiles": [
-    "New features i want to explore.md",
+    "Projects/Beyond Bell Commander.md",
+    "2026-07-17.md",
     "Bugs.md",
+    "/2026-07-17.md",
+    "New features i want to explore.md",
     "Bell Commander To-Do-List.md",
     "2026-07-16.md",
     "/Bell Commander To-Do-List.md",
@@ -298,7 +301,6 @@
     "/2026-07-15.md",
     "Projects/AHM Reverse Engineering.md",
     "/2026-07-14.md",
-    "Projects/Beyond Bell Commander.md",
     "Attachments/Bell Commander Hardware Options.md",
     "2026-07-12.md",
     "Attachments/bell-commander-signal-flow-dante.svg",
@@ -312,8 +314,6 @@
     "Reference/ELC Smart Panels.md",
     "README.md",
     "Projects/Tooling Docker Host.md",
-    "Projects/The Candle Collection.md",
-    "Projects/Rack Builder App.md",
     "Attachments/bell-commander-ui-options.html",
     "Attachments/bell-commander-signal-flow-analogue.svg",
     "Attachments/bell-commander-demo.jsx",
