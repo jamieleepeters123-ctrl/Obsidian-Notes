@@ -4,6 +4,7 @@ Central index for all BNS / GLA project notes.
 
 ## Active Projects
 - [[Beyond Bell Commander]]
+- [[Tablet Wall Panel]]
 - [[AHM Reverse Engineering]]
 - [[BNS Field Tools]]
 - [[PiFace Kiosk]]

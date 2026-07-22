@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2026-07-12.md",
+                "file": "Bugs.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2026-07-12"
+              "title": "Bugs"
             }
           }
         ]
@@ -196,28 +196,36 @@
   },
   "active": "a899e0cf82f98c20",
   "lastOpenFiles": [
+    "2026-07-18.md",
+    "2026-07-17.md",
+    "New features i want to explore.md",
+    "Bugs.md",
+    "Bell Commander To-Do-List.md",
     "Home.md",
+    "README.md",
+    "Untitled.md",
+    "2026-07-14.md",
+    "2026-07-17.md.tmp.38856.dbfc063e5254",
+    "2026-07-13.md",
+    "2026-07-12.md",
+    "2026-07-10.md",
+    "2026-07-09.md",
+    "2026-07-08.md",
+    "Projects/PiFace Kiosk.md",
+    "Projects/GLA - Bright Sparx Proposal.md",
+    "Projects/BNS Field Tools.md",
+    "Projects/Beyond Bell Commander.md",
+    "Projects/Bell Commander UI Spec.md",
+    "Projects/Bell Commander Telemetry.md",
+    "Projects/AI Inference Server.md",
+    "Projects/AHM Reverse Engineering.md",
+    "2026-07-16.md",
+    "2026-07-15.md",
+    "2026-07-07.md",
     "Attachments/bell-commander-signal-flow-analogue.svg",
     "Attachments/Bell Commander Product Plan v0.1.md",
     "Attachments/bell-commander-signal-flow-dante.svg",
-    "Attachments/Bell Commander Hardware Options.md",
-    "Projects/Bell Commander UI Spec.md",
-    "Projects/Bell Commander Demo UI.md",
-    "Projects/AI Inference Server.md",
-    "Projects/AHM Reverse Engineering.md",
-    "Projects/Rack Builder App.md",
-    "Projects/Tooling Docker Host.md",
-    "Projects/Bell Commander Telemetry.md",
-    "Projects/Beyond Bell Commander.md",
-    "2026-07-12.md",
     "err.tmp",
-    "Projects/BNS Field Tools.md",
-    "Projects/The Candle Collection.md",
-    "Bell Commander To-Do-List.md",
-    "2026-07-10.md",
-    "README.md",
-    "Untitled.md",
-    "2026-07-09.md",
     "Projects/The Candle Collection.md.tmp.30908.3977bddff4db",
     "Projects/Beyond Bell Commander.md.tmp.20492.b829bfff70f6",
     "2026-07-10.md.tmp.20492.2b9b6739bded",
@@ -225,13 +233,6 @@
     "2026-07-10.md.tmp.20492.c91bbea0d47a",
     "2026-07-10.md.tmp.20492.2bd19e9268d7",
     "Projects/Beyond Bell Commander.md.tmp.20492.7913e527be56",
-    "Projects/Beyond Bell Commander.md.tmp.20492.50ccea6ad488",
-    "2026-07-10.md.tmp.20492.66226d801b58",
-    "2026-07-08.md",
-    "2026-07-07.md",
-    "Code/bellcommander/README.md",
-    "Sites/Campbelltown PS.md",
-    "Sites/Batemans Bay High School.md",
-    "Projects/Strobe Beacon Spec.md"
+    "Projects/Beyond Bell Commander.md.tmp.20492.50ccea6ad488"
   ]
 }
