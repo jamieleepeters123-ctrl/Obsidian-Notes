@@ -46,6 +46,22 @@ While verifying [[Tablet Wall Panel]]'s new physical push-to-talk switch end-to-
 
 **Resolved same day:** diffed the local repo's `xilica.py` against the deployed copy first — the only difference was exactly the `e83971e` circuit breaker, no other drift, so a straight file copy was safe (not a surgical patch like `panel.js` needed). Deployed, old copy backed up (`xilica.py.bak-pre-circuit-breaker-20260730`), service restarted clean, confirmed `online:true` afterward. The office Pi is now on the same driver code as the repo for this file. Did not deliberately re-break the live DSP connection to time the fix in place — the 32s→1.8s improvement was already proven on 26 Jul (live measurement + 4 dedicated tests), so this was a deploy-and-verify-health action, not a re-litigation of the fix itself.
 
+## Testing without hardware — the real Solaro goes offline after 2026-07-30
+
+**From here on, this is the only way most Xilica work gets tested.** Until today, `test_xilica_driver.py` only had two lower tiers: pure control-name/value helpers (no socket at all), and a scripted `FakeSocket`/`CapturingXilica` pair that stubs `_send_line` or scripts exact reply bytes — precise for pinning exact wire commands, but neither one ever opens a real socket. AHM and Atmosphere both had a third tier for that — `FakeAHM`/`FakeAtmosphere`, real in-process TCP servers the actual driver class `connect()`s to — and Xilica didn't. Built the missing piece: **`bellcommander/fake_xilica.py`**, same shape as its siblings, wired in as **`BC_DRIVER=fakexilica`** (matches `fakeahm`/`fakeatmosphere`).
+
+Deliberately replicates the protocol's real sharp edges rather than accepting anything:
+- Every command gets exactly one `<CR>`-terminated reply, **including plain `SET`/`SETRAW`** — guards the 2026-07-23 reply-draining bug class from ever silently regressing.
+- `GETRAW` echoes the raw dB×1000 integer; a `SUBSCRIBE` push is plain decimal dB instead — genuinely different encodings on the real unit, so a fake sharing one conversion between them would be quietly wrong.
+- A handful of documented real-preset defaults rather than defaulting everything to zero/false: paging mic master ships unmuted, `Zone{z}AlertGain` at unity, `PinkNoiseZone{z}Level` floored at −100dB, `ExclusionZone{z}` off.
+- Unknown/malformed commands get `ERROR=1`, not silence — a typo'd control name (the exact shape of bug `set_zone_mute`'s EVAC-tag mixup was) behaves the same against the fake as it would against the real DSP.
+
+**New integration test file, `test_xilica_fake.py` (9 tests, real sockets, not stubs):** connect/mute-on-connect, bell crosspoint routing, page start/stop + the zone-1 typo'd control by its exact real spelling, zone level round-trips through actual `SET`→`GET` wire traffic, EVAC exclusion + Alert Gain + mixer mute, ping, an explicit malformed-command→`ERROR` check, meter delivery over real UDP SUBSCRIBE, and reconnect-after-drop.
+
+**Building those tests immediately found a real, previously-unexercised bug in the driver itself**, not the fake: `disconnect()` can null `_meter_sock` while the background `_meter_loop` thread is mid-iteration, just past its stop-flag check — crashing the thread on `None.recvfrom()`. Nothing had ever driven a genuine `connect()` → `disconnect()` cycle over a real socket before (the scripted lower tiers never start a real meter thread at all), so this had no way to surface until today. Fixed by capturing the socket into a local before use, so a race lands on the already-handled `OSError` path instead. **This fix has NOT yet been deployed to the office Pi** — it was found and fixed after this same session's earlier circuit-breaker deploy there, so `.217`'s `xilica.py` is current on the circuit breaker but one commit behind on this. Low real-world urgency (`disconnect()` likely never fires mid-session on a long-running appliance process), but worth porting next time that file's touched.
+
+431 tests passing repo-wide. Manually verified `BC_DRIVER=fakexilica` end-to-end outside pytest too: server starts, `/api/status` reports `online:true`, and a real `POST /api/ring` actually routed through the fake DSP and rang.
+
 ## Related
 
 [[Beyond Bell Commander]] · [[Office Raspberry Pi 5]] · [[Tablet Wall Panel]] · [[2026-07-30]]
