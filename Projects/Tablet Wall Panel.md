@@ -56,7 +56,23 @@ First pass: assumed PCIe *runtime* power management (idle autosuspend) and fixed
 
 Manual recovery, if this or something like it is ever seen again before a fix lands: `ip link set eth0 down` then `up` (wait ~15-20s for `r8168: eth0: link up` in dmesg before retrying — an immediate retry gets "device has no carrier"), then `nmcli device connect eth0`.
 
+## GPIO resolved — physical push-to-talk switch working (2026-07-29/30)
+
+The parked investigation above ended on "do not resume without an actual schematic." One arrived — a crop of the rear "I/O: GND/1/2" terminal — and it unparked cleanly, no further blind scanning needed.
+
+**The mapping**: `GPIO0_B4` = `GPIO01` = **gpiochip0 line 12**, `GPIO0_D3` = `GPIO02` = **gpiochip0 line 27** (RK numbering `bank*32 + group*8 + index`). Verified on the live device: both unclaimed, both at chip power-on defaults. **The circuit**: a bidirectional SK3018 level shifter per terminal — SoC side through a 100R series resistor, outside-world side with a 10K pull-up to 5V — so each terminal is a 5V open-drain input, good for a dry contact to GND, not for sourcing 5V out.
+
+**The real blocker turned out to be software, not wiring.** Both lines read `0` under every libgpiod bias mode. `pinconf-pins` showed the RK3576 boots these pins with an internal **pull-down** — fighting the board's 10K pull-up and parking the SoC pin in the indeterminate band, so a contact closing to GND produced no edge at all. `gpioget -B pull-up`'s bias request was accepted by the kernel (`gpioinfo` showed `[used pull-up]`) but never reached the actual hardware register — libgpiod's bias flag is a polite request the RK3576 pinctrl driver simply doesn't honour here.
+
+**Fix: a direct register write**, derived from the mainline `pinctrl-rockchip.c` source rather than guessed. IOC-GRF base `0x26040000`; RK3576 packs pull config 2 bits/pin, 8 pins/register, and **bank 0 is split across two distant offsets** (pins 0-11 at `+0x20`, pins 12+ at `+0x2028 − 0x4`) — group B is physically halved between the two, which is why a naive contiguous register scan (see incident below) could never have found it. Encoding verified by a targeted read against all 32 bank-0 pins' known bias states: `00`=none, `01`=pull-down, `11`=pull-up (not either of the two encodings guessed beforehand). Line 12 → `0x26042028` bits `[9:8]`; line 27 → `0x26042030` bits `[7:6]`. A masked write (`busybox devmem`) to each, wrapped in `io-terminal-init.service` (systemd oneshot, `RemainAfterExit=yes`) so it survives reboot, and both terminals now idle high and read `0` on a contact to GND — exactly the dry-contact behaviour the rear panel always should have had.
+
+**⚠ Incident along the way: a blind register sweep hung the panel.** Before deriving the exact offset from source, a brute-force scan across the IOC/PMU GRF address space (looking for a bit-pattern fingerprint match) hit its own timeout and the panel went completely unreachable — ping failed, ARP went `FAILED` after a flush, SSH and ADB both dead. Recovery needed a physical power cycle (clean journal replay on `mmcblk0p6`, self-healed as before). **Lesson, now load-bearing for this board: "read-only" is not the same as "safe."** Reading a register whose clock/power domain is gated can stall the bus just as thoroughly as a bad write — never sweep syscon/GRF space blind; derive the exact offset from driver source first, then do one targeted access.
+
+**Push-to-talk built on top of the working terminal**: `ptt-agent.py` (root, `ThreadingHTTPServer` on `127.0.0.1:8782`, same shape as `netpanel.py`/`led-panel.py`) runs `gpiomon` on line 12 and debounces it with asymmetric hysteresis — fast to engage (40ms), slow to release (200ms), tuned from a real bounce capture on this hardware (worst burst ~157ms, releases consistently clean single edges) so mid-hold chatter can never chop a live page. `panel.js` polls the agent every 100ms and drives the exact same `startTalk()`/`stopTalk()` the on-screen Talk button calls — no synthesized touch events, no dependency on button position, and it degrades silently on any deployment without the hardware. **Verified live**: a real hold/release drove the actual engine's `/api/status.paging` field, not just the local agent's own state.
+
+The relay GPIO (a separate, still-open TODO from 14 Jul) remains unidentified — the schematic that solved the switch terminal was for a different connector; the R157 *mainboard* schematic would be the next lead if picked up.
+
 ## Related
-[[Beyond Bell Commander]] · [[2026-07-22]]
+[[Beyond Bell Commander]] · [[2026-07-22]] · [[2026-07-30]]
 
 #bns #project/bell-commander #hardware
