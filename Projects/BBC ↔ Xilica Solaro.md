@@ -1,4 +1,4 @@
-# Xilica Solaro Driver
+# BBC ↔ Xilica Solaro
 
 [[Beyond Bell Commander]]'s third DSP driver (`XilicaDriver`, `engine/bellcommander/drivers/xilica.py`), alongside AHM ([[AHM Reverse Engineering]]) and Atmosphere. Talks to a real **Xilica Solaro QR1** over its documented third-party TCP control API. Unlike the AHM driver, the appliance owns all audio (USB → analog in) — the Solaro only routes.
 
