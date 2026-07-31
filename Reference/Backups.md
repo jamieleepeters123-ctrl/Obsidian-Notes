@@ -29,8 +29,8 @@ Doubles as the git remote *and* runs 7 Docker containers — `bellcommander`, `b
 Asked (1 Aug) to write a note listing every username/password for this project. Declined the plaintext-in-git version of that on purpose: this vault is pushed to GitHub, and a credentials file in git history is permanent even after it's edited or deleted, and becomes one high-value target if the account or repo is ever compromised. Chose "use a real password manager" instead of "gitignore a plaintext note" — the safer of the two options offered, so nothing in-vault stores secrets. What actually exists (told to Jamie directly, not written here):
 
 - SSH access to the office Pi, the tablet, and the toolkit server — all key-based, no password known to Claude.
-- Portainer (`jamie` / a password reset via the official helper this session, since the old one was lost) — should be **rotated** once it's in a password manager, since it's been displayed in plaintext in a chat transcript a few times today.
-- Two GitHub PATs now live in Windows' git credential manager: the original fine-grained one (Obsidian push only) and a new classic `repo`-scoped one (added 1 Aug for the `beyond-bell-commander` push) — both separate from the actual GitHub account password (unknown to Claude). The classic one was also pasted into a chat transcript in plaintext.
+- Portainer (`jamie` / rotated again 1 Aug via the API — `PUT /api/users/1` with `newPassword`, not `password`, is the field the API actually wants) — confirmed the new password logs in and, separately, that the cron job's own scoped API token (a different credential entirely) kept working through the rotation unaffected. Save the new one into a password manager now; don't let it sit only in this chat transcript either.
+- Two GitHub PATs still live in Windows' git credential manager: the original fine-grained one (Obsidian push only) and a classic `repo`-scoped one (added 1 Aug for the `beyond-bell-commander` push, still not rotated — GitHub has no API for a token to reissue/revoke itself, so that one needs the same by-hand github.com trip as creating it did). Both separate from the actual GitHub account password (unknown to Claude).
 - Bell Commander's admin gate (`BC_ADMIN_PASSWORD`) — currently **unset** on the office Pi, i.e. no password gate exists at all right now. Not a credential to store, but a real decision still open: should it have one?
 
 No claim of completeness here or anywhere else — this only covers what's been directly used/observed in a Claude session, not vendor portals, DNS/domain accounts, or anything else that might exist for this project.
@@ -39,7 +39,8 @@ No claim of completeness here or anywhere else — this only covers what's been 
 All four original items resolved. What's left:
 - [ ] Turn the Portainer off-box pull into something scheduled, not manual
 - [ ] Portainer CE's backup still doesn't cover app volumes/bind mounts — decide if that gap matters enough to solve
-- [ ] Move the credentials above into an actual password manager, then rotate the Portainer password and consider reissuing the classic GitHub PAT
+- [ ] Move the credentials above into an actual password manager (Portainer's rotated password included)
+- [ ] Reissue the classic GitHub PAT when convenient — skipped for now, still the one pasted into a chat transcript
 - [ ] Decide whether the Bell Commander console should have `BC_ADMIN_PASSWORD` set at all
 
 ## Related
