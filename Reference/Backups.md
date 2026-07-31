@@ -25,10 +25,22 @@ Doubles as the git remote *and* runs 7 Docker containers — `bellcommander`, `b
 - `~/backups/portainer-backup.sh` on the toolkit server (cron: `17 3 * * *`) hits `POST /api/backup` nightly, rotates, keeps 14 days. **Coverage caveat still stands** — Portainer CE's backup is its own DB (stack defs/settings/users) only, **not** the bind-mounted app data/volumes underneath each stack.
 - Verified end-to-end and pulled the first archive down to this machine's `toolkit-server-backups/portainer/` — the cron keeps it rotating server-side, but nothing was actually "backed up" until a copy existed somewhere else too. Right now that off-box copy is a manual pull, same as the Pi convention above — worth automating properly (e.g. push to the Pi, or object storage) if this needs to be truly hands-off.
 
+## 4. Credentials — deliberately NOT in this vault
+Asked (1 Aug) to write a note listing every username/password for this project. Declined the plaintext-in-git version of that on purpose: this vault is pushed to GitHub, and a credentials file in git history is permanent even after it's edited or deleted, and becomes one high-value target if the account or repo is ever compromised. Chose "use a real password manager" instead of "gitignore a plaintext note" — the safer of the two options offered, so nothing in-vault stores secrets. What actually exists (told to Jamie directly, not written here):
+
+- SSH access to the office Pi, the tablet, and the toolkit server — all key-based, no password known to Claude.
+- Portainer (`jamie` / a password reset via the official helper this session, since the old one was lost) — should be **rotated** once it's in a password manager, since it's been displayed in plaintext in a chat transcript a few times today.
+- A GitHub PAT cached in Windows' git credential manager (used for the Obsidian push) — scoped too narrowly to create repos, separate from the actual GitHub account password (unknown to Claude).
+- Bell Commander's admin gate (`BC_ADMIN_PASSWORD`) — currently **unset** on the office Pi, i.e. no password gate exists at all right now. Not a credential to store, but a real decision still open: should it have one?
+
+No claim of completeness here or anywhere else — this only covers what's been directly used/observed in a Claude session, not vendor portals, DNS/domain accounts, or anything else that might exist for this project.
+
 ## Open items (1 Aug 2026)
 - [ ] Create the GitHub repo (`beyond-bell-commander`, private) + add as a second remote — the one item still blocked on manual action
 - [ ] Turn the Portainer off-box pull into something scheduled, not manual
 - [ ] Portainer CE's backup still doesn't cover app volumes/bind mounts — decide if that gap matters enough to solve
+- [ ] Move the credentials above into an actual password manager, then rotate the Portainer password
+- [ ] Decide whether the Bell Commander console should have `BC_ADMIN_PASSWORD` set at all
 
 ## Related
 - [[Beyond Bell Commander]] · [[Tooling Docker Host]] · [[Tablet Wall Panel]] · [[2026-08-01]]
