@@ -2,6 +2,8 @@
 
 Central index for all BNS / GLA project notes.
 
+**→ [[Open Items]]** — the running backlog across every project, start here.
+
 ## Active Projects
 - [[Beyond Bell Commander]] — planning/backlog: [[Bell Commander Product Plan v0.1]] · [[Bell Commander Hardware Options]] · [[Commissioning Agent]] · [[New features i want to explore]] · [[Bugs]]
 - [[Tablet Wall Panel]]
@@ -12,6 +14,7 @@ Central index for all BNS / GLA project notes.
 - [[Rack Builder App]]
 - [[AI Inference Server]]
 - [[Tooling Docker Host]]
+- [[Office Raspberry Pi 5]]
 - [[The Candle Collection]]
 
 ## Bell Commander sub-notes
