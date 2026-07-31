@@ -34,7 +34,7 @@ Central index for all BNS / GLA project notes.
 - [[GLA - Bright Sparx Proposal]]
 
 ## Daily notes
-Chronological work log, one per day worked → `Daily/YYYY-MM-DD.md`. Most recent: [[2026-07-31]].
+Chronological work log, one per day worked → `Daily/YYYY-MM-DD.md`. Most recent: [[2026-08-01]].
 
 ## Inbox
 Quick capture, not yet sorted → [[Inbox]]

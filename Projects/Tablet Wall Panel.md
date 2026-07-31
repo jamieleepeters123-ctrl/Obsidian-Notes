@@ -74,7 +74,7 @@ The relay GPIO (a separate, still-open TODO from 14 Jul) remains unidentified �
 
 ## Camera motion-wake ruled out, proximity sensor wired up instead (2026-07-31)
 
-Goal: wake the screen on approach (same DPMS wake [[Beyond Bell Commander]]'s `ptt-agent.py` already does for the physical switch), not just within the bell-schedule window. Tried the onboard camera first; it was a genuine dead end, proven live rather than assumed — the proximity sensor (STK3311, previously only noted as "works" with no detail) turned out to need three real bugs fixed before it did anything either.
+Goal: wake the screen on approach (same DPMS `wake_screen()` mechanism `netpanel.py` already carries — *correction, 1 Aug: `ptt-agent.py` didn't actually have its own copy of this yet at the time this was written, only got one then, see below*), not just within the bell-schedule window. Tried the onboard camera first; it was a genuine dead end, proven live rather than assumed — the proximity sensor (STK3311, previously only noted as "works" with no detail) turned out to need three real bugs fixed before it did anything either.
 
 ### Camera — ruled out
 Raw Bayer stills off `/dev/video0` (160×120 and 640×480 `RG10`, no ISP — this sensor has no `iqfile`, see 14 Jul's peripheral check) show a strong, remarkably *stable* ~33% frame-to-frame byte-difference with **nothing** moving, almost certainly light-flicker beating against a long fixed exposure (pinned near max, 1984/1996 — this bare sensor driver exposes no auto-exposure or anti-flicker control at all). Confirmed independent of resolution. Two live tests with a real person walking up to and past the lens, correlated second-by-second against the diff log, showed **zero** measurable signal above that noise floor — not a tuning problem, a dead end. First live test also caught a separate real bug: single-shot capture (`v4l2-ctl --stream-count=1`, restarted every poll) has an elevated first frame after every restart; a persistent burst capture confirmed this and ruled it out as the cause of anything.
@@ -88,7 +88,10 @@ Raw Bayer stills off `/dev/video0` (160×120 and 640×480 `RG10`, no ISP — thi
 
 **Verified fully live**: screen forced off, real approach, log showed a clean ramp (156→199→212→223), crossed the threshold, fired the wake — confirmed via `xset q` that the monitor actually turned back on, not just that the function was called. Deployed as `motion-wake.service` (systemd, enabled, boot-persistent). Source + unit backed up to `Desktop\Beyond Bell Commander\Tablet\proximity\`, same convention as `ptt`/`net`/`led`.
 
+## ptt-agent.py gains its own screen-wake (2026-08-01)
+Grabbing the physical Talk switch now wakes a DPMS-blanked panel immediately — a `wake_screen()` matching `motion-wake.py`'s own copy of the same `xset dpms force on` / `xset s reset` calls, fired fire-and-forget on a daemon thread the instant the debouncer commits (root, no network round trip needed) rather than in `panel.js`. Closes the gap the 31 Jul note above misdescribed as already covered.
+
 ## Related
-[[Beyond Bell Commander]] · [[2026-07-22]] · [[2026-07-30]] · [[2026-07-31]]
+[[Beyond Bell Commander]] · [[2026-07-22]] · [[2026-07-30]] · [[2026-07-31]] · [[2026-08-01]]
 
 #bns #project/bell-commander #hardware
