@@ -3,33 +3,32 @@
 How Beyond Bell Commander's code and each deployment's live data are (and aren't yet) protected, as of 1 Aug 2026. Three different things get backed up three different ways — code, per-site runtime data, and this vault — don't conflate them.
 
 ## 1. Code — `Beyond Bell Commander` repo
-Root: `Desktop\Beyond Bell Commander` (a real git repo — `engine/` inside it is *not* its own repo, easy to assume otherwise). Active work happens on **`feature/ux-audit-fixes`**.
+Root: `Desktop\Beyond Bell Commander` (a real git repo — `engine/` inside it is *not* its own repo, easy to assume otherwise). Active work happens on **`feature/ux-audit-fixes`**, kept level with **`beta`**.
 
 - **This machine** is the main copy.
 - **`tooling` remote** — `jamie@172.16.200.151:repos/beyond-bell-commander.git`, i.e. the [[Tooling Docker Host]] doubling as a bare-repo git host. Real, pushed-to, working.
-- **GitHub** — not set up yet. No `gh` CLI on this machine, so it needs a repo created on github.com by hand, then added as a second remote here. Pending.
-- **`backup.sh`** (repo root) — one-command `git add -A` + commit + `git push tooling beta`. ⚠ Targets branch **`beta`**, which as of 1 Aug is **30 commits behind** `feature/ux-audit-fixes` — all of July's work has been happening on the feature branch, not beta. Running it as-is would push stale history and indiscriminately stage anything sitting in the working tree. Needs a decision: is `beta` meant to catch up via a merge at some point, or has `feature/ux-audit-fixes` effectively become the real branch and `backup.sh` needs repointing?
+- **GitHub** — still pending. No `gh` CLI on this machine, and a cached GitHub PAT turned out to be scoped too narrowly to create repos via the API — needs a repo created on github.com by hand (`beyond-bell-commander`, private), then added here as a second remote.
+- **`backup.sh` / `beta` vs `feature/ux-audit-fixes`** — resolved 1 Aug. `beta` was 30 commits behind; turned out its 2 unique commits (dashboard fill-width, sidenav ultra-wide breakpoint) were both already superseded by later work on the feature branch (identical `.wrap` change; the breakpoint got tuned further, 2800px vs beta's 2528px). Recorded as a real merge (`-s ours`, no file changes) rather than force-pushing `beta`'s ref, so history stays honest; `beta` then fast-forwarded cleanly. Both branches pushed, both at the same commit, 437/437 tests green. `backup.sh` needs no changes — it was already pointed at the right branch, `beta` just needed to catch up.
 
 ## 2. Per-site runtime data — NOT code, never in git
-Real school config (zone names, bell schedule, EVAC audio) is data, not source — `.gitignore` explicitly excludes `office-pi-config-backups/` and `engine/media/` ("site data, never code").
+Real school config (zone names, bell schedule, EVAC audio) is data, not source — `.gitignore` explicitly excludes `office-pi-config-backups/`, `toolkit-server-backups/`, and `engine/media/` ("site data, never code").
 
-- **`office-pi-config-backups/YYYY-MM-DD-<label>/`** at the repo root — manually pulled dated snapshots of a Pi's `config.json` + `device.json`. Existing convention (not something built this session): `2026-07-20-xilica-poc`, `2026-07-21-bench`, `2026-07-22-bench`, flat dated `config-*.json` files from mid-July, and now `2026-08-01-office` (the real office Pi, pulled during this session).
-- **Scope gap**: this convention only ever captured config/device JSON — never the branding images (~4MB) or sound library (~55MB on the office Pi). Those exist only on the Pi itself right now. Worth deciding if they need their own periodic pull.
+- **`office-pi-config-backups/YYYY-MM-DD-<label>/`** at the repo root — manually pulled dated snapshots. Existing convention (not built this session): `2026-07-20-xilica-poc`, `2026-07-21-bench`, `2026-07-22-bench`, flat dated `config-*.json` files from mid-July.
+- **Scope widened 1 Aug**: `2026-08-01-office` now pulls `config.json` + `device.json` **and** `branding/` (logo + a real wallpaper, `hero-image.png`, uploaded since the branding feature shipped) **and** the full `media/` sound library (~59MB total) — not just the JSON like every prior snapshot. Same convention going forward.
 - **On-device, same-disk backups** — every deploy to a Pi backs up what it's about to overwrite first: `config.json.bak-*`, `branding.bak-*.tar.gz`, `bellcommander-py.bak-*.tar.gz`, `static.bak-*`, `panel.bak-*`, accumulating in `~/bellcommander/` on the Pi. Good insurance against a bad deploy; **useless against SD-card/disk failure** since it never leaves the device — that's what `office-pi-config-backups/` is for.
 - **The wall tablet** stores nothing of its own — it's a Chromium kiosk pointed at the Pi's `/panel` route, so the Pi is the only place a panel copy needs to exist.
 
 ## 3. Office toolkit server (`bns-toolingdocker`, 172.16.200.151)
-Doubles as the git remote *and* runs 7 Docker containers with no backup tool installed at all (checked 1 Aug: no restic/borg/duplicati, just rsync) — `bellcommander`, `bellcommander-redesign`, `bellcommander-uxfix`, `bellcommander-xilica-poc`, `vzx-clone`, `homarr`, `rackbuilder`, `portainer`.
+Doubles as the git remote *and* runs 7 Docker containers — `bellcommander`, `bellcommander-redesign`, `bellcommander-uxfix`, `bellcommander-xilica-poc`, `vzx-clone`, `homarr`, `rackbuilder`, `portainer`.
 
-- Decided: **Portainer's built-in backup**, not Restic.
-- Caveat: it's Portainer **CE**, which only does a manual "Download backup" from Settings — no scheduler (that's a Business Edition feature). CE's backup also only covers Portainer's own DB (stack defs, settings, users) — **not** the actual bind-mounted app data/volumes underneath each stack.
-- To automate it needs an admin API token (Settings → API tokens) so a cron job can hit `POST /api/backup` on a schedule and stash the archive somewhere off that same box. **Blocked on getting that token.**
+- **Portainer backup — set up 1 Aug.** Lost the admin login; reset it via Portainer's official `portainer/helper-reset-password` helper against the `portainer_portainer_data` volume (stop container → run helper → restart), rather than trying to recover the old one. Logged in via the API once to mint a scoped API token (`Settings → API tokens` equivalent, done headlessly), so the password itself isn't needed again.
+- `~/backups/portainer-backup.sh` on the toolkit server (cron: `17 3 * * *`) hits `POST /api/backup` nightly, rotates, keeps 14 days. **Coverage caveat still stands** — Portainer CE's backup is its own DB (stack defs/settings/users) only, **not** the bind-mounted app data/volumes underneath each stack.
+- Verified end-to-end and pulled the first archive down to this machine's `toolkit-server-backups/portainer/` — the cron keeps it rotating server-side, but nothing was actually "backed up" until a copy existed somewhere else too. Right now that off-box copy is a manual pull, same as the Pi convention above — worth automating properly (e.g. push to the Pi, or object storage) if this needs to be truly hands-off.
 
 ## Open items (1 Aug 2026)
-- [ ] Create the GitHub repo + add as a second remote
-- [ ] Get a Portainer API token, script the scheduled backup, and confirm the archive actually lands somewhere *other* than the toolkit server itself
-- [ ] Resolve `backup.sh`'s `beta` vs `feature/ux-audit-fixes` mismatch
-- [ ] Decide whether branding images / sound library need their own backup convention alongside config/device
+- [ ] Create the GitHub repo (`beyond-bell-commander`, private) + add as a second remote — the one item still blocked on manual action
+- [ ] Turn the Portainer off-box pull into something scheduled, not manual
+- [ ] Portainer CE's backup still doesn't cover app volumes/bind mounts — decide if that gap matters enough to solve
 
 ## Related
 - [[Beyond Bell Commander]] · [[Tooling Docker Host]] · [[Tablet Wall Panel]] · [[2026-08-01]]
