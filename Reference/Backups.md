@@ -7,7 +7,7 @@ Root: `Desktop\Beyond Bell Commander` (a real git repo — `engine/` inside it i
 
 - **This machine** is the main copy.
 - **`tooling` remote** — `jamie@172.16.200.151:repos/beyond-bell-commander.git`, i.e. the [[Tooling Docker Host]] doubling as a bare-repo git host. Real, pushed-to, working.
-- **GitHub** — still pending. No `gh` CLI on this machine, and a cached GitHub PAT turned out to be scoped too narrowly to create repos via the API — needs a repo created on github.com by hand (`beyond-bell-commander`, private), then added here as a second remote.
+- **GitHub — done, 1 Aug.** `beyond-bell-commander` (private) created by hand on github.com since no `gh` CLI exists here and the cached fine-grained PAT couldn't create repos via the API. Same PAT then couldn't even *push* to it either (fine-grained tokens are scoped to specific repos at creation, and this new one wasn't on the list) — fixed with a fresh classic PAT (`repo` scope, works for any repo going forward) stored in the git credential manager. Both `beta` and `feature/ux-audit-fixes` pushed; `beta` set as the repo's default branch to match the project convention.
 - **`backup.sh` / `beta` vs `feature/ux-audit-fixes`** — resolved 1 Aug. `beta` was 30 commits behind; turned out its 2 unique commits (dashboard fill-width, sidenav ultra-wide breakpoint) were both already superseded by later work on the feature branch (identical `.wrap` change; the breakpoint got tuned further, 2800px vs beta's 2528px). Recorded as a real merge (`-s ours`, no file changes) rather than force-pushing `beta`'s ref, so history stays honest; `beta` then fast-forwarded cleanly. Both branches pushed, both at the same commit, 437/437 tests green. `backup.sh` needs no changes — it was already pointed at the right branch, `beta` just needed to catch up.
 
 ## 2. Per-site runtime data — NOT code, never in git
@@ -30,16 +30,16 @@ Asked (1 Aug) to write a note listing every username/password for this project. 
 
 - SSH access to the office Pi, the tablet, and the toolkit server — all key-based, no password known to Claude.
 - Portainer (`jamie` / a password reset via the official helper this session, since the old one was lost) — should be **rotated** once it's in a password manager, since it's been displayed in plaintext in a chat transcript a few times today.
-- A GitHub PAT cached in Windows' git credential manager (used for the Obsidian push) — scoped too narrowly to create repos, separate from the actual GitHub account password (unknown to Claude).
+- Two GitHub PATs now live in Windows' git credential manager: the original fine-grained one (Obsidian push only) and a new classic `repo`-scoped one (added 1 Aug for the `beyond-bell-commander` push) — both separate from the actual GitHub account password (unknown to Claude). The classic one was also pasted into a chat transcript in plaintext.
 - Bell Commander's admin gate (`BC_ADMIN_PASSWORD`) — currently **unset** on the office Pi, i.e. no password gate exists at all right now. Not a credential to store, but a real decision still open: should it have one?
 
 No claim of completeness here or anywhere else — this only covers what's been directly used/observed in a Claude session, not vendor portals, DNS/domain accounts, or anything else that might exist for this project.
 
 ## Open items (1 Aug 2026)
-- [ ] Create the GitHub repo (`beyond-bell-commander`, private) + add as a second remote — the one item still blocked on manual action
+All four original items resolved. What's left:
 - [ ] Turn the Portainer off-box pull into something scheduled, not manual
 - [ ] Portainer CE's backup still doesn't cover app volumes/bind mounts — decide if that gap matters enough to solve
-- [ ] Move the credentials above into an actual password manager, then rotate the Portainer password
+- [ ] Move the credentials above into an actual password manager, then rotate the Portainer password and consider reissuing the classic GitHub PAT
 - [ ] Decide whether the Bell Commander console should have `BC_ADMIN_PASSWORD` set at all
 
 ## Related
