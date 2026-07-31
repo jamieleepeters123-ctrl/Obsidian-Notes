@@ -32,7 +32,7 @@ Asked (1 Aug) to write a note listing every username/password for this project. 
 - SSH access to the office Pi, the tablet, and the toolkit server — all key-based, no password known to Claude.
 - Portainer (`jamie` / rotated again 1 Aug via the API — `PUT /api/users/1` with `newPassword`, not `password`, is the field the API actually wants) — confirmed the new password logs in and, separately, that the cron job's own scoped API token (a different credential entirely) kept working through the rotation unaffected. Save the new one into a password manager now; don't let it sit only in this chat transcript either.
 - Two GitHub PATs still live in Windows' git credential manager: the original fine-grained one (Obsidian push only) and a classic `repo`-scoped one (added 1 Aug for the `beyond-bell-commander` push, still not rotated — GitHub has no API for a token to reissue/revoke itself, so that one needs the same by-hand github.com trip as creating it did). Both separate from the actual GitHub account password (unknown to Claude).
-- Bell Commander's admin gate (`BC_ADMIN_PASSWORD`) — **set on the office Pi, 1 Aug**, to `admin`. Flagged as weak before setting it (gates network/restart/driver-change/media-delete on a live school system reachable over the VPN) — set anyway on explicit instruction. Lives as a plaintext `Environment=` line in `/etc/systemd/system/bellcommander.service`, both on the Pi itself and in today's local `office-pi-config-backups/2026-08-01-office/` snapshot.
+- Bell Commander's admin gate (`BC_ADMIN_PASSWORD`) — set on the office Pi 1 Aug, changed same day from `admin` to `2036`. Flagged both times as weak before setting (gates network/restart/driver-change/media-delete on a live school system reachable over the VPN) — the second change isn't actually stronger, just weak differently (4 chars, a guessable year) — set anyway on explicit instruction both times. Lives as a plaintext `Environment=` line in `/etc/systemd/system/bellcommander.service`, both on the Pi itself and in today's local `office-pi-config-backups/2026-08-01-office/` snapshot (kept current with each change).
 
 No claim of completeness here or anywhere else — this only covers what's been directly used/observed in a Claude session, not vendor portals, DNS/domain accounts, or anything else that might exist for this project.
 
@@ -42,7 +42,7 @@ All four original items resolved. What's left:
 - [ ] Portainer CE's backup still doesn't cover app volumes/bind mounts — decide if that gap matters enough to solve
 - [ ] Move the credentials above into an actual password manager (Portainer's rotated password and the new `BC_ADMIN_PASSWORD` both included)
 - [ ] Reissue the classic GitHub PAT when convenient — skipped for now, still the one pasted into a chat transcript
-- [ ] `BC_ADMIN_PASSWORD` is now `admin` — genuinely weak for what it gates; worth strengthening once it's actually in a password manager and easy to update without retyping a memorable one
+- [ ] `BC_ADMIN_PASSWORD` is now `2036` — still weak for what it gates (was `admin`, changed same day, neither attempt was a real strengthening); worth a proper random one once it's in a password manager and doesn't need to be memorable
 
 ## Related
 - [[Beyond Bell Commander]] · [[Tooling Docker Host]] · [[Tablet Wall Panel]] · [[2026-08-01]]
