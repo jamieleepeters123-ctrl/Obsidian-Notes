@@ -72,7 +72,23 @@ The parked investigation above ended on "do not resume without an actual schemat
 
 The relay GPIO (a separate, still-open TODO from 14 Jul) remains unidentified — the schematic that solved the switch terminal was for a different connector; the R157 *mainboard* schematic would be the next lead if picked up.
 
+## Camera motion-wake ruled out, proximity sensor wired up instead (2026-07-31)
+
+Goal: wake the screen on approach (same DPMS wake [[Beyond Bell Commander]]'s `ptt-agent.py` already does for the physical switch), not just within the bell-schedule window. Tried the onboard camera first; it was a genuine dead end, proven live rather than assumed — the proximity sensor (STK3311, previously only noted as "works" with no detail) turned out to need three real bugs fixed before it did anything either.
+
+### Camera — ruled out
+Raw Bayer stills off `/dev/video0` (160×120 and 640×480 `RG10`, no ISP — this sensor has no `iqfile`, see 14 Jul's peripheral check) show a strong, remarkably *stable* ~33% frame-to-frame byte-difference with **nothing** moving, almost certainly light-flicker beating against a long fixed exposure (pinned near max, 1984/1996 — this bare sensor driver exposes no auto-exposure or anti-flicker control at all). Confirmed independent of resolution. Two live tests with a real person walking up to and past the lens, correlated second-by-second against the diff log, showed **zero** measurable signal above that noise floor — not a tuning problem, a dead end. First live test also caught a separate real bug: single-shot capture (`v4l2-ctl --stream-count=1`, restarted every poll) has an elevated first frame after every restart; a persistent burst capture confirmed this and ruled it out as the cause of anything.
+
+### Proximity sensor (STK3311, i2c bus 4 / 0x48) — three real bugs found
+1. **The kernel driver (`light_stk3x1x`) never enables PS mode itself.** Nothing on this bare Linux install ever calls whatever ioctl an Android sensor HAL normally would, so the STATE register sat at `0x00` indefinitely — confirmed by reading it repeatedly over 45s while a hand was held right in front of the sensor. Its `input3`/"lightsensor-level" node never fires a proximity event either, even manually enabled (confirmed via `evtest`, 60s, zero events) — proximity isn't wired through that node on this driver at all.
+2. **First live register test still came back flat** — enabled PS mode directly (`i2cset` STATE=0x01) and polled what was assumed to be `FLAG` (`0x0E`) and `PS_DATA` (LSB only, `0x12`) for 40s of real hand-proximity: completely flat, 239/239 identical samples. Root cause: `0x0E` is actually `THDL2_ALS` (an ALS threshold byte, not FLAG — the real FLAG register is `0x10`), and **`PS_DATA` is a 16-bit value across two registers** (`0x11` MSB + `0x12` LSB) — only reading the LSB half missed all the real variation.
+3. Reading the correct pair live showed a clean, repeatable signal: baseline (idle) sits at a very stable **~130**, climbing past **1000** with a hand held 2-5cm from the sensor. Building the actual always-on daemon then hit a third bug: plain `I2C_SLAVE` ioctl fails `EBUSY` (the kernel driver already owns that address) — needed `I2C_SLAVE_FORCE` (`0x0706`), the same thing `i2cget`/`i2cset` default to for exactly this reason.
+
+**`motion-wake.py`** (root, stdlib-only i2c-dev via `fcntl.ioctl`, same shape as `ptt-agent.py`/`netpanel.py`): enables PS once at startup, polls `PS_DATA` every 250ms, calls the same `wake_screen()` DPMS mechanism `ptt-agent.py` uses whenever a reading exceeds 220 (comfortably above the ~130 baseline, well below the 300+ seen with a real hand near), with a 15s cooldown so one approach doesn't retrigger every poll. The chip's own FLAG register never toggled during any of this testing — it only updates once PS threshold registers (`THDH`/`THDL`) are configured, which this script deliberately doesn't touch, so wake logic reads raw `PS_DATA` directly rather than trusting that flag.
+
+**Verified fully live**: screen forced off, real approach, log showed a clean ramp (156→199→212→223), crossed the threshold, fired the wake — confirmed via `xset q` that the monitor actually turned back on, not just that the function was called. Deployed as `motion-wake.service` (systemd, enabled, boot-persistent). Source + unit backed up to `Desktop\Beyond Bell Commander\Tablet\proximity\`, same convention as `ptt`/`net`/`led`.
+
 ## Related
-[[Beyond Bell Commander]] · [[2026-07-22]] · [[2026-07-30]]
+[[Beyond Bell Commander]] · [[2026-07-22]] · [[2026-07-30]] · [[2026-07-31]]
 
 #bns #project/bell-commander #hardware
