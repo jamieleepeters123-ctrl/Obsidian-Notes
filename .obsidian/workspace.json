@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Bugs.md",
+                "file": "Open Items.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Bugs"
+              "title": "Open Items"
             }
           }
         ]
@@ -41,7 +41,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -196,43 +198,43 @@
   },
   "active": "a899e0cf82f98c20",
   "lastOpenFiles": [
-    "2026-07-18.md",
-    "2026-07-17.md",
-    "New features i want to explore.md",
-    "Bugs.md",
-    "Bell Commander To-Do-List.md",
-    "Home.md",
-    "README.md",
-    "Untitled.md",
-    "2026-07-14.md",
-    "2026-07-17.md.tmp.38856.dbfc063e5254",
-    "2026-07-13.md",
-    "2026-07-12.md",
-    "2026-07-10.md",
-    "2026-07-09.md",
-    "2026-07-08.md",
+    "Reference/Backups.md.tmp.23992.1fc05420fe2c",
+    "Projects/Beyond Bell Commander.md.tmp.23992.662b79ad6904",
+    "Daily/2026-08-01.md.tmp.23992.c6be0a4827a2",
+    "Reference/Backups.md",
+    "Home.md.tmp.23992.47cd4525c457",
+    "Open Items.md",
+    "Open Items.md.tmp.23992.2f9352f42a8a",
+    "Reference/Backups.md.tmp.23992.c3ef3a757f76",
+    "Reference/Backups.md.tmp.23992.42ecda10537e",
+    "Reference/Backups.md.tmp.23992.7751c21920e5",
+    "Reference/Backups.md.tmp.23992.a407fefcc256",
+    "Reference/Backups.md.tmp.23992.e5e7c39d6b96",
+    "Home.md.tmp.23992.0bcbf91b06af",
+    "Daily/2026-08-01.md",
+    "Reference/Pi Kiosk Config.md",
+    "Reference/NSW 2026 Term Dates.md",
+    "Reference/ELC Smart Panels.md",
+    "Projects/Tooling Docker Host.md",
+    "Projects/Bugs.md",
+    "Projects/Bell Commander Hardware Options.md",
+    "Projects/Tablet Wall Panel.md",
+    "Projects/Office Raspberry Pi 5.md",
+    "Projects/Rack Builder App.md",
     "Projects/PiFace Kiosk.md",
+    "Projects/New features i want to explore.md",
+    "Projects/Home Assistant + Zigbee2MQTT.md",
     "Projects/GLA - Bright Sparx Proposal.md",
-    "Projects/BNS Field Tools.md",
-    "Projects/Beyond Bell Commander.md",
+    "Projects/Commissioning Agent.md",
     "Projects/Bell Commander UI Spec.md",
     "Projects/Bell Commander Telemetry.md",
+    "Projects/Bell Commander Product Plan v0.1.md",
+    "Projects/Bell Commander Demo UI.md",
     "Projects/AI Inference Server.md",
     "Projects/AHM Reverse Engineering.md",
-    "2026-07-16.md",
-    "2026-07-15.md",
-    "2026-07-07.md",
+    "2026-07-23.md",
+    "Bugs.md",
     "Attachments/bell-commander-signal-flow-analogue.svg",
-    "Attachments/Bell Commander Product Plan v0.1.md",
-    "Attachments/bell-commander-signal-flow-dante.svg",
-    "err.tmp",
-    "Projects/The Candle Collection.md.tmp.30908.3977bddff4db",
-    "Projects/Beyond Bell Commander.md.tmp.20492.b829bfff70f6",
-    "2026-07-10.md.tmp.20492.2b9b6739bded",
-    "2026-07-10.md.tmp.20492.45db7157af2d",
-    "2026-07-10.md.tmp.20492.c91bbea0d47a",
-    "2026-07-10.md.tmp.20492.2bd19e9268d7",
-    "Projects/Beyond Bell Commander.md.tmp.20492.7913e527be56",
-    "Projects/Beyond Bell Commander.md.tmp.20492.50ccea6ad488"
+    "Attachments/bell-commander-signal-flow-dante.svg"
   ]
 }
