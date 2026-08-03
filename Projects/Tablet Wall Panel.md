@@ -129,6 +129,8 @@ Two separate reports, same root traced to a genuine engine-connectivity problem 
 
 Second, once the office Pi was deliberately disconnected to test the panel purely as a standalone Node-RED AV controller: the amber LED bred continuously, because `led-panel.py`'s `classify()` was written back when every panel was assumed to always have a Bell Commander engine somewhere — "no engine found" meant "fault," full stop. That assumption broke the moment a panel got a second, legitimate reason to have *no* engine at all. Fixed by tracking whether this panel has *ever* actually found one: no engine ever found → idle (dark, matching the standalone role, correctly not alarming); had a working engine and lost it → still amber (a real regression, still worth flagging); an engine that's found but reports itself unhealthy (the Xilica case above) → unaffected, still faults immediately either way. Verified live: LED went dark right after redeploying, on a panel with zero discoverable engines.
 
+**The Xilica unit itself was only ever a POC demo loan, not a permanent fixture** — it'll stay off the network and `online:false`/amber will keep showing correctly (not a bug) until a real unit is purchased; testing in the meantime happens without it. Explicitly asked whether to suppress that signal for the duration — decided to leave it accurate rather than mute it, since it's exactly the same indicator that needs to be trustworthy the moment a real unit is connected and something's actually wrong.
+
 ## Related
 [[Beyond Bell Commander]] · [[2026-07-22]] · [[2026-07-30]] · [[2026-07-31]] · [[2026-08-01]]
 
