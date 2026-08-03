@@ -1,6 +1,6 @@
 # Tablet Wall Panel
 
-The Beyond paging station — a 10.1" Android/Linux touch panel kiosking [[Beyond Bell Commander]]'s `/panel` page. Modelled on the customer's Q-SYS console.
+The Beyond paging station — a 10.1" Android/Linux touch panel kiosking [[Beyond Bell Commander]]'s `/panel` page. Modelled on the customer's Q-SYS console. As of 2026-08-03 the same panel hardware/kiosk can also be commissioned as a standalone classroom AV controller (Node-RED) instead — see below; a given unit runs one role or the other, never both at once.
 
 ## Hardware
 - **"Smart Home Control Panel"**, 10.1" — board model **ZX-SMT1019-R157-V2.0** (Rockchip **RK3576S**, quad Cortex-A55 + quad Cortex-A53/A72, 4GB/32-64GB, Debian 12 bookworm on this unit — vendor also ships Android). Manual photos: `Desktop\Beyond Bell Commander\Tablet\Manual`.
@@ -90,6 +90,16 @@ Raw Bayer stills off `/dev/video0` (160×120 and 640×480 `RG10`, no ISP — thi
 
 ## ptt-agent.py gains its own screen-wake (2026-08-01)
 Grabbing the physical Talk switch now wakes a DPMS-blanked panel immediately — a `wake_screen()` matching `motion-wake.py`'s own copy of the same `xset dpms force on` / `xset s reset` calls, fired fire-and-forget on a daemon thread the instant the debouncer commits (root, no network round trip needed) rather than in `panel.js`. Closes the gap the 31 Jul note above misdescribed as already covered.
+
+## Standalone Node-RED classroom AV controller (2026-08-03)
+
+A genuinely separate product on the same panel hardware, not an extra feature of Bell Commander — TV power/volume/input control per classroom, deliberately never running alongside a live Bell Commander instance on the same unit. Discussed first as "should this be a second mode bolted onto the Bell Commander kiosk," resolved instead into "one image, one job per deployed panel, chosen at commissioning time by which server gets picked" — reusing the existing discovery/picker screen rather than adding a separate boot-time role config.
+
+**Stack**: Debian bookworm's own `nodejs`/`npm` (18.20.4 — Node-RED 5.x actually requires Node 20+, caught via `npm`'s own `EBADENGINE` warnings before it went further; stayed on Node-RED **4.1.13** rather than add a third-party apt repo just for a newer Node). `@flowfuse/node-red-dashboard` (Dashboard 2.0), not the classic `node-red-dashboard` — npm flags that one deprecated on install, switched before building anything on it. `adminAuth` enabled on the editor (username/password, real bcrypt hash via `node-red admin hash-pw`) and deliberately left reachable on the LAN rather than loopback-only — the school's AV gear sits on a VLAN genuinely isolated from student devices, a real network fact, not an assumption. `credentialSecret` set explicitly in `settings.js` rather than left system-generated, so it survives a reflash the same way `config.json` does elsewhere in this project. Runs as `node-red.service` (systemd, `Restart=always`, same shape as `netpanel.service`).
+
+**Reachable from the kiosk exactly like a Bell Commander engine is.** `launcher.html`'s picker screen gained a pinned "Node-RED Dashboard · this panel" entry (`http://127.0.0.1:1880/dashboard/`), separate from the dynamic "recents" list. Selecting it goes through the same `showCountdown()` reachability-checked path a discovered engine uses — not the manual "Enter address" flow, which auto-appends `/panel` to whatever's typed (see [[Beyond Bell Commander]]'s 3 Aug entry) and would have mangled this URL. That reuse also solves the boot-order race for free: if Node-RED hasn't finished starting yet, the same retry/offline-screen behaviour already built for a slow-to-boot Bell Commander engine covers it. Verified live end-to-end on the office Pi's own panel: 11-tap logo gesture → picker → tap the Node-RED entry → countdown → lands cleanly in the dashboard inside the same kiosk window, no browser chrome — then reverted the same panel back to its real Bell Commander role afterward, since this was a proof-of-concept on a live unit, not a permanent reassignment.
+
+A minimal starter flow (one `ui-base`/`ui-page`/`ui-group`/`ui-text`) is deployed so the dashboard route actually exists rather than 404ing on an empty flow — real content ("Ready to build this classroom's AV control flow") to build the actual TV control logic on top of, not a blank page.
 
 ## Related
 [[Beyond Bell Commander]] · [[2026-07-22]] · [[2026-07-30]] · [[2026-07-31]] · [[2026-08-01]]
