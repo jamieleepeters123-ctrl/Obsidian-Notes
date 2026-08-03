@@ -114,6 +114,15 @@ Second: a hidden escape gesture for the Node-RED role, matching the Bell Command
 
 Site-wide code (CSS + the gesture) lives in Node-RED's own `flows.json` on the tablet — runtime/site data, not code, so nothing to commit here (same category as `config.json`, not tracked in git).
 
+### A real TV control demo dashboard, then a light-theme/big-button redesign (2026-08-03, later still)
+
+Built the actual classroom AV dashboard on top of the scaffolding above — not static widgets, a real state machine: Power, Mute, Volume, Input (HDMI 1-3 / VGA), and an All Off scene button, backed by one `function` node holding simulated TV state in flow context (`flow.set('tvState', ...)` is exactly where a real IR/RS-232 driver would plug in later — the rear terminal has both). Two genuine Dashboard 2.0 gotchas found building it, worth remembering before touching this flow again:
+
+- **`ui-text`'s `valueType` defaults to `"msg"` (dynamic), but explicitly setting it to `"str"` silently pins the widget to its static `value` field forever** — the Status readout looked fine when built, then never updated on a single interaction, because it had been set to `"str"` (harmless for a genuinely static label, which is how the very first "Welcome" placeholder text used it — the bug only bit once the same field pattern got reused for something meant to be live). Diagnosed properly rather than guessed: wired a temporary `debug` node onto the same output as the widget, confirmed the function was sending the *correct* full string the entire time, which narrowed it straight to the widget config rather than the logic.
+- **A button's colour can be changed dynamically, but only via `msg.ui_update: {buttonColor, textColor}`** — top-level `msg.buttonColor` (or the static `bgcolor`/`color` fields, which exist on the node but aren't what the current renderer reads) are both silently ignored. Confirmed by reading the actual widget source (`ui_button.js`) rather than guessing from the editor's field list.
+
+Redesigned once the demo was functionally proven: light theme (matching the same palette already used on the Bell Commander console/panel — white cards, warm off-white page, brand blue `#2870FF` primary, brand magenta `#F20C53` for alerts), full page width instead of a ~two-thirds card, and Power/Mute converted from switches to big toggle-coloured buttons so every control has the same visual weight — "big buttons, simple UI" on request. The volume slider was dropped entirely in favour of two big Vol−/Vol+ step buttons (±5) — a slider is a genuinely fussy precision control on a wall-mounted touchscreen, and the exact number is still visible in the Status line regardless. Also added `user-select: none` to the site CSS after a stray touch highlighted title text like a text-selection drag.
+
 ## Related
 [[Beyond Bell Commander]] · [[2026-07-22]] · [[2026-07-30]] · [[2026-07-31]] · [[2026-08-01]]
 
