@@ -5,7 +5,7 @@ Central index for all BNS / GLA project notes.
 **→ [[Open Items]]** — the running backlog across every project, start here.
 
 ## Active Projects
-- [[Beyond Bell Commander]] — planning/backlog: [[Bell Commander Product Plan v0.1]] · [[Bell Commander Hardware Options]] · [[Commissioning Agent]] · [[New features i want to explore]] · [[Bugs]]
+- [[Beyond Bell Commander]] — planning/backlog: [[Bell Commander — Internal Notes (not for client)]] · [[Commissioning Agent]] · [[New features i want to explore]] · [[Bugs]] · ~~[[Bell Commander Product Plan v0.1]]~~ · ~~[[Bell Commander Hardware Options]]~~ (both archived, superseded by Architecture v2)
 - [[Tablet Wall Panel]]
 - [[AHM Reverse Engineering]]
 - [[BBC ↔ Xilica Solaro]]

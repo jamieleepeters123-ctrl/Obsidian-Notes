@@ -29,6 +29,7 @@ Full detail in [[Bugs]]:
 ## Bell Commander — concepts not yet built
 - [ ] **[[Commissioning Agent]]** — a dedicated step-by-step commissioning wizard (admin + end-user paths), instead of the current setup flow that's grown organically feature-by-feature.
 - [ ] **[[New features i want to explore|client-facing web page]]** — a simple page to welcome/introduce a client to their system (zones, mics, tones, EVACs, timetable) and capture info useful both for quoting and for programming the actual install.
+- [ ] See **[[Bell Commander — Internal Notes (not for client)]]** (2 Aug) for the full list of ideas/archived plans kept deliberately out of client-facing material.
 
 ## The Candle Collection
 - [ ] GPT hero/story imagery — blocked on OpenAI billing hard limit. `gen_images.py` (gpt-image-1) is ready to run once that's lifted; stand-in photos are live in the meantime (`static/img/hero.jpg`, `story.jpg`).

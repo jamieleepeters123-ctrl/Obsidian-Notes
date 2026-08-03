@@ -1,5 +1,7 @@
 # Beyond Bell Commander — Hardware Options
 
+> ⚠ **ARCHIVED — superseded, 2 Aug 2026.** Companion to [[Bell Commander Product Plan v0.1]], which is itself archived — see that note for why. This BOM (Crestron head end, Sound Node Pi, Q-SYS/Redback/TOA amp options) describes the product that was never built. Never show this to a client. See [[Bell Commander — Internal Notes (not for client)]].
+
 **Beyond Network Solutions** · July 2026 · Companion to Product Plan v0.1
 Indicative AUD pricing only — confirm with distributors before quoting. ★ = recommended standard.
 

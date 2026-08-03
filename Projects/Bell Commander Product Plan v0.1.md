@@ -1,5 +1,7 @@
 # Beyond Bell Commander — Product Plan v0.1 (Draft for Review)
 
+> ⚠ **ARCHIVED — superseded, 2 Aug 2026.** This whole plan (Crestron RMC4/CP4 control layer, C#/SIMPL# scheduler, CH5 UI, tiered Core/Plus/Pro commercial model, Q-SYS as the flagship driver) never got built. What actually shipped instead — **Architecture v2**, a headless Python/Linux appliance driving AHM/Atlas/Xilica DSPs directly, no Crestron anywhere — is documented in [[Beyond Bell Commander]]. Kept here for history only. **Never quote pricing/tiers from this doc — none of it was ever finalized (see the ❓ marks throughout) and it describes a product that doesn't exist.** See [[Bell Commander — Internal Notes (not for client)]].
+
 **Beyond Network Solutions** · July 2026
 Status: DRAFT — open decisions flagged as ❓ throughout. Mark up and return.
 
