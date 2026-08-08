@@ -22,6 +22,7 @@ Table refreshed 1 Aug 2026 against real `docker ps` output — was badly stale (
 | bellcommander-xilica-poc | `:8092` | Stands in for the offline bench Pi |
 | vzx-clone | `:8093` | Static nginx |
 | bellcommander-redesign | `:8094` | |
+| bellcommander-portal | `:8100` | [[Bell Commander Portal]] — real, in-use (not a demo copy); built 8 Aug 2026, firmware host + read-only repo mount at `./src:/repo:ro` |
 | homarr | `:7575` | Dashboard |
 | [[Rack Builder App]] | `:5000` | `~/apps/rackbuilder/` |
 | portainer | `:9443` (https) | See [[Backups]] — nightly config backup running here since 1 Aug |
