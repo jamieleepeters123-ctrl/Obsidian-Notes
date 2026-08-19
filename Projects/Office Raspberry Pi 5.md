@@ -3,8 +3,8 @@
 Referenced from four other notes ([[Beyond Bell Commander]], [[BBC ↔ Xilica Solaro]], [[2026-07-20]], [[2026-07-30]]) but never had its own page until this backups/vault audit (1 Aug 2026) — writing down what's actually been verified about it rather than leaving those links dangling.
 
 ## Access
-- **IP:** `172.16.200.217`, over the Sophos VPN (office subnet, same as [[Tooling Docker Host]])
-- **SSH:** `ssh pi@172.16.200.217`
+- **IP:** `172.16.200.217` (eth0, the long-standing address) — **but check `eth0` is actually up before trusting it.** Found disconnected 18 Aug 2026 (a real cabling/switch-port issue, not software); the Pi stayed reachable throughout at `172.16.200.190` over the Wi-Fi backup added that same day (see [[Beyond Bell Commander]]'s Wi-Fi entry) — `eth0` metric 100 (primary) / `wlan0` metric 600 (backup), both on the same subnet. If `.217` times out, try `.190` before assuming the box is down; the engine's own `GET /api/panels` (for the wall panel) or `nmcli -t -f DEVICE,STATE dev` over whichever address answers will confirm which link is actually up.
+- **SSH:** `ssh pi@172.16.200.217` (or `.190` per above), over the Sophos VPN (office subnet, same as [[Tooling Docker Host]])
 - **Service:** `bellcommander.service` (systemd) — `sudo systemctl restart bellcommander` / `status` / `reboot`
 
 ## Deployment model
@@ -14,13 +14,19 @@ Referenced from four other notes ([[Beyond Bell Commander]], [[BBC ↔ Xilica So
 - Always back up whatever's about to be overwritten first (`*.bak-<timestamp>` / `*.bak-<timestamp>.tar.gz`, right there in `~/bellcommander/`) — see [[Backups]] for why that alone isn't sufficient.
 - Restart the service, then verify with a real `curl`/API call — not just "no error on deploy."
 
-## Currently: standing in for the Xilica POC
-**Not currently driving the real live school AHM install.** Repurposed 20 Jul 2026 as a 4-zone Xilica Solaro proof-of-concept (the real install is 8 zones on a real AHM) after a driver-swap test crashed it as predicted. The real school's config is backed up on the Pi itself:
+## Currently: connected to a real AtlasIED Atmosphere unit (updated 18 Aug 2026)
+**Not currently driving the real live school AHM install.** Repurposed 20 Jul 2026 as a Xilica Solaro proof-of-concept, then **18 Aug 2026: moved again, this time onto a real AtlasIED Atmosphere unit (AZM4) at `172.16.200.188:5321`** — genuinely connected and control-mapped, not a POC config left half-pointed at it. `config.json`'s own `site_name` still literally says `"Xilica POC"` — cosmetic leftover, worth a rename next time someone's in Setup, but not functionally wrong.
+
+⚠ **Real incident here, worth remembering generally, not just for this one fix:** the driver picker (`device.json`'s `"driver"` field) had already been switched to `atmosphere` before this was investigated, but the systemd unit's `Environment=BC_DRIVER=xilica` line silently overrode it — `serve.py` always prefers the env var over `device.json`. So the service kept running the old, dead Xilica driver with `online: false`, and nothing about the config *looked* wrong. Fixed by removing `BC_DRIVER` from the unit entirely (not just correcting its value) so `device.json` becomes the one source of truth going forward — otherwise every future driver change from the console's own picker would keep silently failing to take effect after a restart. `GET /api/system/driver` has a `locked_by_env` field built for exactly this diagnosis; check it first if a driver switch ever again "doesn't seem to take."
+
+The old Xilica-era school-config backups are still on the Pi if ever needed:
 - `config.school-backup-2026-07-20.json`
 - `config.xilica-poc-backup-2026-07-20.json` / `device.xilica-poc-backup-2026-07-20.json`
 - `device.xilica-poc-backup-2026-07-30-verified-good.json`
 
-⚠ Exact, verified step-by-step revert-to-live instructions aren't written down anywhere yet — right now reverting means restoring `config.school-backup-2026-07-20.json` (and the matching pre-POC `device.json`, not yet clearly identified/backed up alongside it) and confirming the driver picker is back on AHM, not Xilica. Worth nailing down properly before it's actually needed under time pressure.
+⚠ Exact, verified step-by-step revert-to-live-AHM instructions still aren't written down anywhere — reverting means restoring `config.school-backup-2026-07-20.json` (and the matching pre-POC `device.json`, not yet clearly identified/backed up alongside it) and setting the driver back to `ahm`. Worth nailing down properly before it's actually needed under time pressure.
+
+See [[Beyond Bell Commander]]'s 18 Aug (evening) entry for the full control-mapping pass on this unit — zone mute/level and Source-level input control now genuinely work and are verified live; paging was deliberately removed from this Atlas (WebRTC-only on this site) rather than wired up; live metering was checked and found not achievable via the documented JSON-RPC protocol (`ZoneMeter_N`/`SourceMeter_N` return a health flag, not a level).
 
 ## Known quirk
 On restart, the log line `driver.connect() failed at startup; will retry lazily` shows up consistently (seen repeatedly through the Aug 1 wallpaper/preview deploys) — appears benign/expected given the driver connects lazily, but not confirmed against the driver source.
