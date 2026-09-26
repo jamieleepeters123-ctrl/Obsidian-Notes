@@ -21,6 +21,7 @@ Central index for all BNS / GLA project notes.
 - [[Bell Commander Demo UI]]
 - [[Bell Commander Telemetry]]
 - [[Bell Commander UI Spec]]
+- [[Bell Commander RTP Stream Zones]] — design sketch: RTP zones + Beyond Pi receiver (26 Sep 2026)
 
 ## Sites
 - [[Batemans Bay High School]]
