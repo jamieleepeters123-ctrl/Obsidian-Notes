@@ -31,6 +31,14 @@ Full detail in [[Bugs]]:
 - [ ] **[[New features i want to explore|client-facing web page]]** — a simple page to welcome/introduce a client to their system (zones, mics, tones, EVACs, timetable) and capture info useful both for quoting and for programming the actual install.
 - [ ] See **[[Bell Commander — Internal Notes (not for client)]]** (2 Aug) for the full list of ideas/archived plans kept deliberately out of client-facing material.
 
+## AV Control
+Full detail in [[AV Control]]:
+- [ ] Commit the repo (`Desktop\AV Control`, on `beta`, nothing committed yet)
+- [ ] No login: anyone on the LAN can control devices and edit the dashboard. Consider a PIN for edit mode
+- [ ] Atlas / Samsung / PJLink only tested against simulators. Needs an office install, or a route from piface to the office network
+- [ ] Global Cache IP2CC not on the network yet. Add it by IP once installed
+- [ ] Convert "Dining" (Shelly Plus 2PM) from generic HTTP to the Shelly type for live state
+
 ## The Candle Collection
 - [ ] GPT hero/story imagery — blocked on OpenAI billing hard limit. `gen_images.py` (gpt-image-1) is ready to run once that's lifted; stand-in photos are live in the meantime (`static/img/hero.jpg`, `story.jpg`).
 - [ ] Consider Stripe/PayID checkout later.

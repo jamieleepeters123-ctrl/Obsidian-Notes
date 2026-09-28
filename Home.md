@@ -11,6 +11,7 @@ Central index for all BNS / GLA project notes.
 - [[BBC ↔ Xilica Solaro]]
 - [[BNS Field Tools]]
 - [[PiFace Kiosk]]
+- [[AV Control]] — Flask control system + drag-and-drop dashboard (Atlas, Samsung, PJLink, Shelly, iTach, generic IP); runs on piface :5050
 - [[Rack Builder App]]
 - [[AI Inference Server]]
 - [[Tooling Docker Host]]
